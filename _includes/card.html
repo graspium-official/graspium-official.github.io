@@ -32,7 +32,7 @@
     <div class="links">
       {% if p.paper %}<a href="{{ p.paper }}" class="pill" target="_blank" rel="noopener">{{ site.data.site.link_icons.paper }} paper</a>{% endif %}
       {% if p.slides %}<a href="{{ p.slides }}" class="pill pill-slides" data-slides="{{ p.slides }}" data-id="{{ p.id }}">{{ site.data.site.link_icons.slides }} slides</a>{% endif %}
-      {% if p.video %}<a href="{{ p.video }}" class="pill" target="_blank" rel="noopener">{{ site.data.site.link_icons.video }} video</a>{% endif %}
+      {% if p.video %}<a href="{{ p.video }}" class="pill pill-video" data-video="{{ p.video }}" data-id="{{ p.id }}">{{ site.data.site.link_icons.video }} video</a>{% endif %}
       {% if p.code %}<a href="{{ p.code }}" class="pill" target="_blank" rel="noopener">{{ site.data.site.link_icons.code }} code</a>{% endif %}
       {% if p.project %}<a href="{{ p.project }}" class="pill" target="_blank" rel="noopener">{{ site.data.site.link_icons.project }} project</a>{% endif %}
     </div>

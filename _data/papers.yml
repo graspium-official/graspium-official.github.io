@@ -15,7 +15,7 @@
   notes: "Key insight: flow matching outperforms diffusion for action generation due to straighter trajectories. The VLA architecture unifies vision, language, and action in a single transformer. Discussion focused on scalability to new tasks and real-world deployment challenges."
   paper: "#"
   slides: "https://drive.google.com/file/d/1XqAataCxMdRTAElNjll_1FKzdYP9TnK0/view?usp=sharing"
-  video: "#"
+  video: "https://www.youtube.com/watch?v=DAYDULXfEDc"
   code: "#"
   image_url: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400&h=260&fit=crop"
 

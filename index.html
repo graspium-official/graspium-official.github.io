@@ -44,3 +44,16 @@ layout: default
     </div>
   </div>
 </div>
+
+<!-- Video Viewer Modal -->
+<div class="overlay video-overlay" id="video-modal" style="display: none;">
+  <div class="video-modal" onclick="event.stopPropagation()">
+    <div class="video-modal-header">
+      <span class="video-modal-title section-label">Video</span>
+      <button class="video-modal-close">×</button>
+    </div>
+    <div class="video-modal-body">
+      <iframe id="video-iframe" src="" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+    </div>
+  </div>
+</div>

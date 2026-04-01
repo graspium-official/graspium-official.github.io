@@ -242,6 +242,48 @@
       }
     }
 
+    // ─── Video Modal ───
+    function toVideoEmbedUrl(url) {
+      // YouTube: convert watch URL to embed
+      const ytMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/);
+      if (ytMatch) return 'https://www.youtube.com/embed/' + ytMatch[1];
+      // Already embeddable
+      return url;
+    }
+
+    document.querySelectorAll('.pill-video').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const url = btn.dataset.video;
+        if (!url || url === '#') return;
+        const iframe = document.getElementById('video-iframe');
+        const modal = document.getElementById('video-modal');
+        iframe.src = toVideoEmbedUrl(url);
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    const videoModal = document.getElementById('video-modal');
+    if (videoModal) {
+      videoModal.addEventListener('click', (e) => {
+        if (e.target === videoModal) {
+          videoModal.style.display = 'none';
+          document.getElementById('video-iframe').src = '';
+          document.body.style.overflow = '';
+        }
+      });
+      const closeBtn = videoModal.querySelector('.video-modal-close');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+          videoModal.style.display = 'none';
+          document.getElementById('video-iframe').src = '';
+          document.body.style.overflow = '';
+        });
+      }
+    }
+
     // ─── Modal ───
     document.querySelectorAll('.card').forEach(card => {
       card.addEventListener('click', (e) => {
