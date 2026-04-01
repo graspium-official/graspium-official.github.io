@@ -1,0 +1,65 @@
+# ─── Identity ───
+name: "Graspium"
+tagline: >-
+  A paper review group focused on robotic manipulation, learning-based control,
+  and dexterous hands. We meet every 1–2 weeks to review recent papers
+  and share the latest research trends.
+github_url: "https://github.com/graspium-official"
+
+# ─── Typography ───
+fonts:
+  heading: "'Source Serif 4', Georgia, serif"
+  body: "'DM Sans', sans-serif"
+  mono: "'JetBrains Mono', monospace"
+  google_import: "https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+
+# ─── Colors ───
+colors:
+  bg: "#FAFAFA"
+  card_bg: "#FFFFFF"
+  border: "#E0E0E0"
+  text_primary: "#1A1A1A"
+  text_secondary: "#888888"
+  text_tertiary: "#BBBBBB"
+  accent: "#1A1A1A"
+  status_reviewed: "#2A9D5C"
+  status_upcoming: "#D4A017"
+
+# ─── Dark Colors ───
+colors_dark:
+  bg: "#121212"
+  card_bg: "#1E1E1E"
+  border: "#333333"
+  text_primary: "#E8E8E8"
+  text_secondary: "#999999"
+  text_tertiary: "#666666"
+  accent: "#E8E8E8"
+  status_reviewed: "#2A9D5C"
+  status_upcoming: "#D4A017"
+
+# ─── Layout ───
+layout:
+  max_width: "1200px"
+  card_min_width: "280px"
+  card_image_height: "160px"
+  grid_gap: "1px"
+
+# ─── Link Icons ───
+link_icons:
+  paper: "↗"
+  slides: "◫"
+  video: "▶"
+  code: "</>"
+  project: "◎"
+
+# ─── Default Thumbnails ───
+default_thumbnails:
+  grasping: "assets/thumbnails/_default_grasping.jpg"
+  manipulation: "assets/thumbnails/_default_manipulation.jpg"
+  imitation_learning: "assets/thumbnails/_default_il.jpg"
+  reinforcement_learning: "assets/thumbnails/_default_rl.jpg"
+  vla: "assets/thumbnails/_default_vla.jpg"
+  tactile: "assets/thumbnails/_default_tactile.jpg"
+  dexterous: "assets/thumbnails/_default_dexterous.jpg"
+  sim2real: "assets/thumbnails/_default_sim2real.jpg"
+  _fallback: "assets/thumbnails/_default.jpg"

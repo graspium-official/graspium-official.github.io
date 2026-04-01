@@ -1,0 +1,16 @@
+title: Graspium
+description: "A reading group exploring the frontiers of robot learning"
+url: ""
+baseurl: "/graspium"
+
+markdown: kramdown
+
+exclude:
+  - develop_instruction.md
+  - roboreview-gallery.jsx
+  - scripts/
+  - README.md
+  - Gemfile.lock
+  - node_modules/
+  - .venv/
+  - .gitignore

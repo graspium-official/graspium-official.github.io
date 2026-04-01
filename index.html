@@ -1,0 +1,46 @@
+---
+layout: default
+---
+
+{% include header.html %}
+{% include filters.html %}
+
+<main class="main-content" style="max-width: var(--max-width); margin: 0 auto; padding: 0 24px;">
+  <div class="grid-header">
+    <div class="grid-header-left">
+      <span class="section-label paper-count">{{ site.data.papers | size }} papers</span>
+      <span class="active-keyword" style="display: none;"></span>
+    </div>
+    <span class="section-label">Sorted by date</span>
+  </div>
+
+  <div class="card-grid">
+    {% assign sorted = site.data.papers | sort: "date" | reverse %}
+    {% for paper in sorted %}
+      {% include card.html paper=paper %}
+    {% endfor %}
+  </div>
+
+  <div class="no-results">
+    No papers match the current filters.
+  </div>
+
+  {% include members.html %}
+
+  {% include footer.html %}
+</main>
+
+{% include modal.html %}
+
+<!-- Slides Viewer Modal -->
+<div class="overlay slides-overlay" id="slides-modal" style="display: none;">
+  <div class="slides-modal" onclick="event.stopPropagation()">
+    <div class="slides-modal-header">
+      <span class="slides-modal-title section-label">Slides</span>
+      <button class="slides-modal-close">×</button>
+    </div>
+    <div class="slides-modal-body">
+      <iframe id="slides-iframe" src="" allowfullscreen></iframe>
+    </div>
+  </div>
+</div>

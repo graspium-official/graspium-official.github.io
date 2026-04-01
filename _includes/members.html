@@ -1,0 +1,31 @@
+<section class="members-section">
+  <div class="members-inner">
+    <div class="members-header">
+      <span class="section-label">Members</span>
+    </div>
+    <div class="members-grid">
+      {% for member in site.data.members %}
+        {% if member.url %}
+          {% assign member_link = member.url %}
+        {% elsif member.github %}
+          {% assign member_link = "https://github.com/" | append: member.github %}
+        {% else %}
+          {% assign member_link = nil %}
+        {% endif %}
+        <a class="member-card" {% if member_link %}href="{{ member_link }}" target="_blank" rel="noopener"{% endif %}>
+          <img
+            src="https://github.com/{{ member.github }}.png?size=120"
+            alt="{{ member.name }}"
+            class="member-avatar"
+            loading="lazy"
+          />
+          <div class="member-name">{{ member.name }}</div>
+          <div class="member-role">{{ member.role }}</div>
+          {% if member.affiliation and member.affiliation != "" %}
+            <div class="member-affiliation">{{ member.affiliation }}</div>
+          {% endif %}
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>

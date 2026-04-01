@@ -1,0 +1,141 @@
+name: Add Paper from Issue
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  add-paper:
+    if: github.event.label.name == 'add-paper'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Parse issue and append paper entry
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const body = context.payload.issue.body;
+
+            // Parse form fields from issue body
+            function parseField(label) {
+              const regex = new RegExp(`### ${label}\\s*\\n\\s*\\n([\\s\\S]*?)(?=\\n### |$)`);
+              const match = body.match(regex);
+              if (!match) return '';
+              return match[1].trim();
+            }
+
+            const title = parseField('Paper Title');
+            const arxivId = parseField('arXiv ID');
+            const authors = parseField('Authors');
+            const venue = parseField('Venue');
+            const field = parseField('Field');
+            const lang = parseField('Language');
+            const keywords = parseField('Keywords');
+            const presenter = parseField('Presenter');
+            const tldr = parseField('TL;DR');
+            const paperUrl = parseField('Paper URL');
+            const thumbnailUrl = parseField('Thumbnail URL');
+
+            if (!title || !authors || !venue || !field || !lang || !keywords || !presenter) {
+              core.setFailed('Missing required fields in the issue body.');
+              return;
+            }
+
+            // Generate new paper ID (YYYY-NNN)
+            const papersPath = '_data/papers.yml';
+            const existing = fs.readFileSync(papersPath, 'utf8');
+            const now = new Date();
+            const year = now.getFullYear().toString();
+
+            const idPattern = new RegExp(`id:\\s*"${year}-(\\d{3})"`, 'g');
+            let maxNum = 0;
+            let m;
+            while ((m = idPattern.exec(existing)) !== null) {
+              const num = parseInt(m[1], 10);
+              if (num > maxNum) maxNum = num;
+            }
+            const newId = `${year}-${String(maxNum + 1).padStart(3, '0')}`;
+
+            // Format date as YYYY-MM-DD
+            const date = now.toISOString().split('T')[0];
+
+            // Build keywords YAML list
+            const kwList = keywords.split(',').map(k => k.trim()).filter(Boolean);
+            const kwYaml = kwList.map(k => `    - "${k}"`).join('\n');
+
+            // Escape double quotes in strings
+            function esc(s) { return s.replace(/"/g, '\\"'); }
+
+            // Build YAML entry
+            let entry = `\n- id: "${newId}"`;
+            entry += `\n  title: "${esc(title)}"`;
+            entry += `\n  authors: "${esc(authors)}"`;
+            entry += `\n  venue: "${esc(venue)}"`;
+            entry += `\n  date: "${date}"`;
+            entry += `\n  field: "${field}"`;
+            entry += `\n  lang: "${lang}"`;
+            entry += `\n  keywords:`;
+            entry += `\n${kwYaml}`;
+            entry += `\n  presenter: "${esc(presenter)}"`;
+            entry += `\n  status: "pending"`;
+
+            if (tldr && tldr !== '_No response_') {
+              entry += `\n  tldr: "${esc(tldr)}"`;
+            }
+
+            if (paperUrl && paperUrl !== '_No response_') {
+              entry += `\n  paper: "${esc(paperUrl)}"`;
+            } else if (arxivId && arxivId !== '_No response_') {
+              entry += `\n  paper: "https://arxiv.org/abs/${esc(arxivId)}"`;
+            } else {
+              entry += `\n  paper: "#"`;
+            }
+
+            if (thumbnailUrl && thumbnailUrl !== '_No response_') {
+              entry += `\n  image_url: "${esc(thumbnailUrl)}"`;
+            }
+
+            entry += '\n';
+
+            // Append to papers.yml
+            fs.appendFileSync(papersPath, entry);
+
+            // Export for later steps
+            core.exportVariable('NEW_PAPER_ID', newId);
+            core.exportVariable('PAPER_TITLE', title);
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add _data/papers.yml
+          git commit -m "Add paper ${NEW_PAPER_ID}: ${PAPER_TITLE}"
+          git push
+
+      - name: Close issue with comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const newPaperId = process.env.NEW_PAPER_ID;
+            const paperTitle = process.env.PAPER_TITLE;
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `Paper **${paperTitle}** has been registered with ID \`${newPaperId}\` and added to the reading list. Closing this issue.`
+            });
+
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              state: 'closed'
+            });

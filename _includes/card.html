@@ -1,0 +1,40 @@
+{% assign p = include.paper %}
+{% assign thumb = p.thumbnail
+   | default: p.image_url
+   | default: site.data.site.default_thumbnails[p.field]
+   | default: site.data.site.default_thumbnails._fallback %}
+
+{% assign kw_list = "" %}
+{% for kw in p.keywords %}
+  {% if forloop.first %}
+    {% assign kw_list = kw %}
+  {% else %}
+    {% assign kw_list = kw_list | append: "," | append: kw %}
+  {% endif %}
+{% endfor %}
+
+<div class="card" data-field="{{ p.field }}" data-lang="{{ p.lang }}" data-id="{{ p.id }}" data-keywords="{{ kw_list }}">
+  <div class="card-img">
+    <img src="{{ thumb }}" alt="" loading="lazy" />
+    <span class="venue-badge">{{ p.venue }}</span>
+    {% if p.lang %}
+      <span class="lang-badge lang-{{ p.lang }}">{{ p.lang | upcase }}</span>
+    {% endif %}
+  </div>
+  <div class="card-body">
+    <div class="card-title">{{ p.title }}</div>
+    <div class="meta">{{ p.presenter }} · {{ p.date }}</div>
+    <div class="tags">
+      {% for kw in p.keywords %}
+        <span class="tag tag-clickable" data-keyword="{{ kw }}">{{ kw }}</span>
+      {% endfor %}
+    </div>
+    <div class="links">
+      {% if p.paper %}<a href="{{ p.paper }}" class="pill" target="_blank" rel="noopener">{{ site.data.site.link_icons.paper }} paper</a>{% endif %}
+      {% if p.slides %}<a href="{{ p.slides }}" class="pill pill-slides" data-slides="{{ p.slides }}" data-id="{{ p.id }}">{{ site.data.site.link_icons.slides }} slides</a>{% endif %}
+      {% if p.video %}<a href="{{ p.video }}" class="pill" target="_blank" rel="noopener">{{ site.data.site.link_icons.video }} video</a>{% endif %}
+      {% if p.code %}<a href="{{ p.code }}" class="pill" target="_blank" rel="noopener">{{ site.data.site.link_icons.code }} code</a>{% endif %}
+      {% if p.project %}<a href="{{ p.project }}" class="pill" target="_blank" rel="noopener">{{ site.data.site.link_icons.project }} project</a>{% endif %}
+    </div>
+  </div>
+</div>

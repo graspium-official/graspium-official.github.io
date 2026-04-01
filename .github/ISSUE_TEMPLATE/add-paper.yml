@@ -1,0 +1,124 @@
+name: "Add Paper"
+description: "Submit a new paper for review"
+labels: ["add-paper"]
+body:
+  - type: input
+    id: title
+    attributes:
+      label: Paper Title
+      description: "Full title of the paper"
+      placeholder: "e.g., π₀: A Vision-Language-Action Flow Model for General Robot Control"
+    validations:
+      required: true
+
+  - type: input
+    id: arxiv_id
+    attributes:
+      label: arXiv ID
+      description: "arXiv identifier (optional)"
+      placeholder: "e.g., 2410.24164"
+    validations:
+      required: false
+
+  - type: input
+    id: authors
+    attributes:
+      label: Authors
+      description: "Author list (use et al. for long lists)"
+      placeholder: "e.g., K. Black, N. Brown, D. Driess et al."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: venue
+    attributes:
+      label: Venue
+      description: "Publication venue"
+      options:
+        - CoRL
+        - RSS
+        - ICRA
+        - IROS
+        - NeurIPS
+        - ICML
+        - ICLR
+        - CVPR
+        - Science Robotics
+        - T-RO
+        - RA-L
+        - arXiv
+    validations:
+      required: true
+
+  - type: dropdown
+    id: field
+    attributes:
+      label: Field
+      description: "Primary research field"
+      options:
+        - grasping
+        - manipulation
+        - imitation_learning
+        - reinforcement_learning
+        - vla
+        - tactile
+        - dexterous
+        - sim2real
+    validations:
+      required: true
+
+  - type: dropdown
+    id: lang
+    attributes:
+      label: Language
+      description: "Presentation language"
+      options:
+        - kor
+        - eng
+    validations:
+      required: true
+
+  - type: input
+    id: keywords
+    attributes:
+      label: Keywords
+      description: "Comma-separated keywords"
+      placeholder: "e.g., VLA, Foundation Model, Flow Matching"
+    validations:
+      required: true
+
+  - type: input
+    id: presenter
+    attributes:
+      label: Presenter
+      description: "Name of the presenter"
+      placeholder: "e.g., Chanyoung Ahn"
+    validations:
+      required: true
+
+  - type: textarea
+    id: tldr
+    attributes:
+      label: TL;DR
+      description: "2-3 sentence summary of the paper"
+      placeholder: "Brief summary of the paper's main contribution and approach..."
+    validations:
+      required: false
+
+  - type: input
+    id: paper_url
+    attributes:
+      label: Paper URL
+      description: "Direct link to the paper (optional)"
+      placeholder: "https://..."
+    validations:
+      required: false
+
+  - type: input
+    id: thumbnail_url
+    attributes:
+      label: Thumbnail URL
+      description: "Image URL for the paper card (optional)"
+      placeholder: "https://..."
+    validations:
+      required: false

@@ -1,0 +1,29 @@
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-top">
+      <div class="header-text">
+        <a href="{{ site.baseurl }}/" class="site-title-row">
+          <img src="{{ site.baseurl }}/assets/logo/graspium_logo.png" alt="Graspium" class="site-logo" />
+          <h1 class="site-title">{{ site.data.site.name }}</h1>
+        </a>
+        <p class="site-tagline">{{ site.data.site.tagline }}</p>
+      </div>
+      <div class="header-right">
+        <div class="header-stats">
+          <div class="stat">
+            <div class="stat-number">{{ site.data.papers | size }}</div>
+            <div class="stat-label">Papers</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">{{ site.data.members | size }}</div>
+            <div class="stat-label">Members</div>
+          </div>
+        </div>
+        <div class="header-controls">
+          <button class="control-btn view-toggle" title="List view">☰</button>
+          <button class="control-btn theme-toggle" title="Dark mode">☽</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

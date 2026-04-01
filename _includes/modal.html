@@ -1,0 +1,68 @@
+{% assign sorted = site.data.papers | sort: "date" | reverse %}
+{% for p in sorted %}
+{% assign thumb = p.thumbnail
+   | default: p.image_url
+   | default: site.data.site.default_thumbnails[p.field]
+   | default: site.data.site.default_thumbnails._fallback %}
+
+<div class="overlay" id="modal-{{ p.id }}" style="display: none;">
+  <div class="modal" onclick="event.stopPropagation()">
+    <img src="{{ thumb }}" alt="" />
+    <div class="modal-body">
+      <div class="modal-tags-row">
+        {% assign field_label = p.field %}
+        {% for f in site.data.tags.fields %}
+          {% if f.key == p.field %}
+            {% assign field_label = f.label %}
+          {% endif %}
+        {% endfor %}
+        <span class="tag tag-field">{{ field_label }}</span>
+        <span class="tag">{{ p.venue }}</span>
+        {% if p.lang %}
+          <span class="tag lang-tag lang-{{ p.lang }}">{{ p.lang | upcase }}</span>
+        {% endif %}
+      </div>
+
+      <h2 class="modal-title">{{ p.title }}</h2>
+
+      {% if p.tldr %}
+        <div class="modal-tldr">{{ p.tldr }}</div>
+      {% endif %}
+
+      <div class="meta" style="margin-bottom: 6px;">
+        <span style="color: #555;">{{ p.authors }}</span>
+      </div>
+      <div class="meta" style="margin-bottom: 18px;">
+        Presenter: <span class="presenter-name">{{ p.presenter }}</span>
+        <span class="meta-divider">|</span>
+        {{ p.date }}
+      </div>
+
+      <div class="divider"></div>
+
+      {% if p.notes %}
+        <div class="modal-notes">
+          <div class="modal-notes-label">Review Notes</div>
+          <div class="modal-notes-content">{{ p.notes }}</div>
+        </div>
+      {% endif %}
+
+      <div class="modal-keywords">
+        {% for kw in p.keywords %}
+          <span class="tag">{{ kw }}</span>
+        {% endfor %}
+      </div>
+
+      <div class="modal-links">
+        {% if p.paper %}<a href="{{ p.paper }}" class="pill pill-modal" target="_blank" rel="noopener">{{ site.data.site.link_icons.paper }} paper</a>{% endif %}
+        {% if p.slides %}<a href="{{ p.slides }}" class="pill pill-modal pill-slides" data-slides="{{ p.slides }}" data-id="{{ p.id }}">{{ site.data.site.link_icons.slides }} slides</a>{% endif %}
+        {% if p.video %}<a href="{{ p.video }}" class="pill pill-modal" target="_blank" rel="noopener">{{ site.data.site.link_icons.video }} video</a>{% endif %}
+        {% if p.code %}<a href="{{ p.code }}" class="pill pill-modal" target="_blank" rel="noopener">{{ site.data.site.link_icons.code }} code</a>{% endif %}
+        {% if p.project %}<a href="{{ p.project }}" class="pill pill-modal" target="_blank" rel="noopener">{{ site.data.site.link_icons.project }} project</a>{% endif %}
+      </div>
+
+      <button class="modal-close">Close</button>
+    </div>
+  </div>
+</div>
+{% endfor %}

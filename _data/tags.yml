@@ -1,0 +1,35 @@
+# ─── Fields ───
+# These appear as filter buttons. Order here = display order on site.
+fields:
+  - key: "grasping"
+    label: "Grasping"
+  - key: "manipulation"
+    label: "Manipulation"
+  - key: "imitation_learning"
+    label: "Imitation Learning"
+  - key: "reinforcement_learning"
+    label: "Reinforcement Learning"
+  - key: "vla"
+    label: "VLA"
+  - key: "tactile"
+    label: "Tactile Sensing"
+  - key: "dexterous"
+    label: "Dexterous Hand"
+  - key: "sim2real"
+    label: "Sim-to-Real"
+
+# ─── Venues (optional, for validation) ───
+known_venues:
+  - "CoRL"
+  - "RSS"
+  - "ICRA"
+  - "IROS"
+  - "NeurIPS"
+  - "ICML"
+  - "ICLR"
+  - "CVPR"
+  - "Science Robotics"
+  - "T-RO"
+  - "RA-L"
+  - "arXiv"
+  - "CoRL Workshop"

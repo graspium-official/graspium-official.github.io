@@ -1,0 +1,14 @@
+<div class="filter-section">
+  <div class="filter-row">
+    <div class="filter-bar">
+      <button class="filter-btn active" data-field="all">All</button>
+      {% for field in site.data.tags.fields %}
+        <button class="filter-btn" data-field="{{ field.key }}">{{ field.label }}</button>
+      {% endfor %}
+      <span class="filter-divider"></span>
+      <button class="lang-filter-btn filter-btn" data-lang="kor">KOR</button>
+      <button class="lang-filter-btn filter-btn" data-lang="eng">ENG</button>
+    </div>
+    <input class="search-input" type="text" placeholder="Search papers..." />
+  </div>
+</div>

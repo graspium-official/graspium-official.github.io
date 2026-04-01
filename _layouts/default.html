@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ site.data.site.name }}</title>
+  <link rel="icon" type="image/png" href="{{ site.baseurl }}/assets/logo/graspium_logo.png">
+  <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/style.css">
+  <link rel="stylesheet" href="{{ site.data.site.fonts.google_import }}">
+  <style>
+    :root {
+      --bg: {{ site.data.site.colors.bg }};
+      --card-bg: {{ site.data.site.colors.card_bg }};
+      --border: {{ site.data.site.colors.border }};
+      --text-primary: {{ site.data.site.colors.text_primary }};
+      --text-secondary: {{ site.data.site.colors.text_secondary }};
+      --text-tertiary: {{ site.data.site.colors.text_tertiary }};
+      --accent: {{ site.data.site.colors.accent }};
+      --status-reviewed: {{ site.data.site.colors.status_reviewed }};
+      --status-upcoming: {{ site.data.site.colors.status_upcoming }};
+      --font-heading: {{ site.data.site.fonts.heading }};
+      --font-body: {{ site.data.site.fonts.body }};
+      --font-mono: {{ site.data.site.fonts.mono }};
+      --max-width: {{ site.data.site.layout.max_width }};
+      --card-min-w: {{ site.data.site.layout.card_min_width }};
+      --card-img-h: {{ site.data.site.layout.card_image_height }};
+      --grid-gap: {{ site.data.site.layout.grid_gap }};
+    }
+    [data-theme="dark"] {
+      --bg: {{ site.data.site.colors_dark.bg }};
+      --card-bg: {{ site.data.site.colors_dark.card_bg }};
+      --border: {{ site.data.site.colors_dark.border }};
+      --text-primary: {{ site.data.site.colors_dark.text_primary }};
+      --text-secondary: {{ site.data.site.colors_dark.text_secondary }};
+      --text-tertiary: {{ site.data.site.colors_dark.text_tertiary }};
+      --accent: {{ site.data.site.colors_dark.accent }};
+    }
+  </style>
+  <script>
+    // Apply saved theme before render to avoid flash
+    if (localStorage.getItem('theme') === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  </script>
+</head>
+<body>
+  <div class="site-wrapper">
+    {{ content }}
+  </div>
+
+  <script>
+    // ─── Dark Mode Toggle ───
+    const themeBtn = document.querySelector('.theme-toggle');
+    if (themeBtn) {
+      const updateIcon = () => {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        themeBtn.textContent = isDark ? '☀' : '☽';
+        themeBtn.title = isDark ? 'Light mode' : 'Dark mode';
+      };
+      updateIcon();
+      themeBtn.addEventListener('click', () => {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        if (isDark) {
+          document.documentElement.removeAttribute('data-theme');
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          localStorage.setItem('theme', 'dark');
+        }
+        updateIcon();
+      });
+    }
+
+    // ─── View Toggle (Grid / List) ───
+    const viewToggle = document.querySelector('.view-toggle');
+    const cardGrid = document.querySelector('.card-grid');
+    if (viewToggle && cardGrid) {
+      const saved = localStorage.getItem('view') || 'grid';
+      if (saved === 'list') cardGrid.classList.add('list-view');
+      const updateViewIcon = () => {
+        const isList = cardGrid.classList.contains('list-view');
+        viewToggle.textContent = isList ? '⊞' : '☰';
+        viewToggle.title = isList ? 'Grid view' : 'List view';
+      };
+      updateViewIcon();
+      viewToggle.addEventListener('click', () => {
+        cardGrid.classList.toggle('list-view');
+        localStorage.setItem('view', cardGrid.classList.contains('list-view') ? 'list' : 'grid');
+        updateViewIcon();
+      });
+    }
+
+    // ─── Field Filtering ───
+    document.querySelectorAll('.filter-btn[data-field]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn[data-field]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        applyFilters();
+      });
+    });
+
+    // ─── Lang Toggle (KOR / ENG) ───
+    let activeLang = null;
+    document.querySelectorAll('.lang-filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const lang = btn.dataset.lang;
+        if (activeLang === lang) {
+          activeLang = null;
+          btn.classList.remove('active');
+        } else {
+          activeLang = lang;
+          document.querySelectorAll('.lang-filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+        }
+        applyFilters();
+      });
+    });
+
+    // ─── Tag Click Filtering ───
+    let activeKeyword = null;
+    document.addEventListener('click', (e) => {
+      const tag = e.target.closest('.tag-clickable');
+      if (!tag) return;
+      e.stopPropagation();
+      const kw = tag.dataset.keyword;
+      if (activeKeyword === kw) {
+        activeKeyword = null;
+        document.querySelectorAll('.tag-clickable').forEach(t => t.classList.remove('tag-active'));
+      } else {
+        activeKeyword = kw;
+        document.querySelectorAll('.tag-clickable').forEach(t => {
+          t.classList.toggle('tag-active', t.dataset.keyword === kw);
+        });
+      }
+      // Update keyword display
+      const kwDisplay = document.querySelector('.active-keyword');
+      if (kwDisplay) {
+        if (activeKeyword) {
+          kwDisplay.textContent = '× ' + activeKeyword;
+          kwDisplay.style.display = '';
+        } else {
+          kwDisplay.style.display = 'none';
+        }
+      }
+      applyFilters();
+    });
+
+    // Clear keyword filter when clicking the badge
+    document.addEventListener('click', (e) => {
+      if (e.target.classList.contains('active-keyword')) {
+        activeKeyword = null;
+        document.querySelectorAll('.tag-clickable').forEach(t => t.classList.remove('tag-active'));
+        e.target.style.display = 'none';
+        applyFilters();
+      }
+    });
+
+    // ─── Search ───
+    const searchInput = document.querySelector('.search-input');
+    if (searchInput) {
+      searchInput.addEventListener('input', () => {
+        applyFilters();
+      });
+    }
+
+    function applyFilters() {
+      const activeField = document.querySelector('.filter-btn[data-field].active');
+      const field = activeField ? activeField.dataset.field : 'all';
+      const query = searchInput ? searchInput.value.toLowerCase() : '';
+
+      let visibleCount = 0;
+      document.querySelectorAll('.card').forEach(card => {
+        const cardField = card.dataset.field;
+        const cardLang = card.dataset.lang;
+        const text = card.textContent.toLowerCase();
+
+        let show = true;
+        if (field !== 'all' && cardField !== field) show = false;
+        if (activeLang && cardLang !== activeLang) show = false;
+        if (query && !text.includes(query)) show = false;
+        if (activeKeyword) {
+          const keywords = card.dataset.keywords ? card.dataset.keywords.split(',') : [];
+          if (!keywords.includes(activeKeyword)) show = false;
+        }
+
+        card.style.display = show ? '' : 'none';
+        if (show) visibleCount++;
+      });
+
+      const countEl = document.querySelector('.paper-count');
+      if (countEl) {
+        countEl.textContent = visibleCount + ' paper' + (visibleCount !== 1 ? 's' : '');
+      }
+
+      const noResults = document.querySelector('.no-results');
+      if (noResults) {
+        noResults.style.display = visibleCount === 0 ? '' : 'none';
+      }
+    }
+
+    // ─── Slides Modal ───
+    function toEmbedUrl(url) {
+      // Google Drive: convert /view to /preview
+      const driveMatch = url.match(/drive\.google\.com\/file\/d\/([^/]+)/);
+      if (driveMatch) return 'https://drive.google.com/file/d/' + driveMatch[1] + '/preview';
+      // Google Slides: convert to embed
+      if (url.includes('docs.google.com/presentation')) return url.replace(/\/edit.*|\/pub.*/, '/embed?start=false&loop=false');
+      // Already embeddable or direct PDF
+      return url;
+    }
+
+    document.querySelectorAll('.pill-slides').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const url = btn.dataset.slides;
+        if (!url || url === '#') return;
+        const iframe = document.getElementById('slides-iframe');
+        const modal = document.getElementById('slides-modal');
+        iframe.src = toEmbedUrl(url);
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    const slidesModal = document.getElementById('slides-modal');
+    if (slidesModal) {
+      slidesModal.addEventListener('click', (e) => {
+        if (e.target === slidesModal) {
+          slidesModal.style.display = 'none';
+          document.getElementById('slides-iframe').src = '';
+          document.body.style.overflow = '';
+        }
+      });
+      const closeBtn = slidesModal.querySelector('.slides-modal-close');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+          slidesModal.style.display = 'none';
+          document.getElementById('slides-iframe').src = '';
+          document.body.style.overflow = '';
+        });
+      }
+    }
+
+    // ─── Modal ───
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('click', (e) => {
+        if (e.target.closest('.pill')) return;
+        if (e.target.closest('.tag-clickable')) return;
+        const id = card.dataset.id;
+        const modal = document.getElementById('modal-' + id);
+        if (modal) {
+          modal.style.display = 'flex';
+          document.body.style.overflow = 'hidden';
+        }
+      });
+    });
+
+    document.querySelectorAll('.overlay').forEach(overlay => {
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+          overlay.style.display = 'none';
+          document.body.style.overflow = '';
+        }
+      });
+    });
+
+    document.querySelectorAll('.modal-close').forEach(btn => {
+      btn.addEventListener('click', () => {
+        btn.closest('.overlay').style.display = 'none';
+        document.body.style.overflow = '';
+      });
+    });
+
+    // Close modal on Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.overlay').forEach(o => o.style.display = 'none');
+        document.body.style.overflow = '';
+      }
+    });
+  </script>
+</body>
+</html>
