@@ -1,7 +1,7 @@
 title: Graspium
 description: "A reading group exploring the frontiers of robot learning"
 url: ""
-baseurl: "/graspium"
+baseurl: ""
 
 markdown: kramdown
 
