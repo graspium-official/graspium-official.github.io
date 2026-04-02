@@ -1,8 +1,6 @@
 # ─── Fields ───
 # These appear as filter buttons. Order here = display order on site.
 fields:
-  - key: "grasping"
-    label: "Grasping"
   - key: "manipulation"
     label: "Manipulation"
   - key: "imitation_learning"
@@ -33,3 +31,4 @@ known_venues:
   - "RA-L"
   - "arXiv"
   - "CoRL Workshop"
+  - "Ongoing"
