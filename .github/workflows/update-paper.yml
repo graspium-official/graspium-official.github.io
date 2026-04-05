@@ -1,0 +1,231 @@
+name: Update Paper from Issue
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  update-paper:
+    if: github.event.label.name == 'update-paper'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pages: write
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Parse issue and update paper entry
+        uses: actions/github-script@v7
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          script: |
+            const fs = require('fs');
+            const body = context.payload.issue.body;
+
+            // Parse form fields from issue body
+            function parseField(label) {
+              const regex = new RegExp(`### ${label}\\s*\\n\\s*\\n([\\s\\S]*?)(?=\\n### |$)`);
+              const match = body.match(regex);
+              if (!match) return '';
+              return match[1].trim();
+            }
+
+            const paperId = parseField('Paper ID');
+            if (!paperId) {
+              core.setFailed('Paper ID is required.');
+              return;
+            }
+
+            // Read papers.yml and split into entries
+            const papersPath = '_data/papers.yml';
+            const content = fs.readFileSync(papersPath, 'utf8');
+
+            // Split file into individual paper blocks (each starts with "- id:")
+            const blocks = content.split(/\n(?=- id:)/);
+            let found = false;
+            let paperTitle = '';
+
+            function esc(s) { return s.replace(/"/g, '\\"'); }
+
+            // Helper: update or append a single-value field in a YAML block
+            function setField(block, key, value) {
+              const regex = new RegExp(`^(  ${key}:).*$`, 'm');
+              if (regex.test(block)) {
+                return block.replace(regex, `$1 "${esc(value)}"`);
+              } else {
+                // Append before the last newline
+                return block.trimEnd() + `\n  ${key}: "${esc(value)}"` + '\n';
+              }
+            }
+
+            // Helper: update keywords (multi-line list)
+            function setKeywords(block, kwString) {
+              const kwList = kwString.split(',').map(k => k.trim()).filter(Boolean);
+              const kwYaml = kwList.map(k => `    - "${k}"`).join('\n');
+              // Remove existing keywords block
+              const cleaned = block.replace(/  keywords:\n(    - .*\n?)*/m, '');
+              return cleaned.trimEnd() + `\n  keywords:\n${kwYaml}` + '\n';
+            }
+
+            const updatedBlocks = blocks.map(block => {
+              // Check if this block matches the target paper ID
+              const idMatch = block.match(/id:\s*"([^"]+)"/);
+              if (!idMatch || idMatch[1] !== paperId) return block;
+
+              found = true;
+
+              // Extract current title for commit message
+              const titleMatch = block.match(/title:\s*"([^"]+)"/);
+              paperTitle = titleMatch ? titleMatch[1] : paperId;
+
+              // Parse update fields - only update if provided and not empty/_No response_
+              const fields = {
+                title: parseField('Paper Title'),
+                authors: parseField('Authors'),
+                venue: parseField('Venue'),
+                field: parseField('Field'),
+                lang: parseField('Language'),
+                keywords: parseField('Keywords'),
+                presenter: parseField('Presenter'),
+                status: parseField('Status'),
+                tldr: parseField('TL;DR'),
+                paper: parseField('Paper URL'),
+                slides: parseField('Slides URL'),
+                video: parseField('Video URL'),
+              };
+              const thumbnailRaw = parseField('Thumbnail Image');
+
+              let updated = block;
+
+              // Simple fields mapping: form field -> YAML key
+              const simpleFields = {
+                title: 'title',
+                authors: 'authors',
+                venue: 'venue',
+                field: 'field',
+                lang: 'lang',
+                presenter: 'presenter',
+                status: 'status',
+                tldr: 'tldr',
+                paper: 'paper',
+                slides: 'slides',
+                video: 'video',
+              };
+
+              for (const [formKey, yamlKey] of Object.entries(simpleFields)) {
+                const val = fields[formKey];
+                if (val && val !== '_No response_') {
+                  updated = setField(updated, yamlKey, val);
+                  if (formKey === 'title') paperTitle = val;
+                }
+              }
+
+              // Keywords (multi-line)
+              if (fields.keywords && fields.keywords !== '_No response_') {
+                updated = setKeywords(updated, fields.keywords);
+              }
+
+              // Thumbnail image
+              if (thumbnailRaw && thumbnailRaw !== '_No response_') {
+                const mdImgMatch = thumbnailRaw.match(/!\[.*?\]\((https?:\/\/[^\s)]+)\)/);
+                const plainUrlMatch = thumbnailRaw.match(/(https?:\/\/[^\s]+\.(png|jpg|jpeg|gif|webp|svg)(\?[^\s]*)?)/i);
+                const anyUrlMatch = thumbnailRaw.match(/(https?:\/\/[^\s)]+)/);
+                const imageUrl = mdImgMatch ? mdImgMatch[1] : (plainUrlMatch ? plainUrlMatch[1] : (anyUrlMatch ? anyUrlMatch[1] : ''));
+
+                if (imageUrl) {
+                  const extMatch = imageUrl.match(/\.(png|jpg|jpeg|gif|webp|svg)/i);
+                  const ext = extMatch ? extMatch[1].toLowerCase() : 'png';
+                  const filename = `${paperId}.${ext}`;
+                  const thumbnailPath = `assets/thumbnails/${filename}`;
+
+                  const { execSync } = require('child_process');
+                  let downloaded = false;
+                  try {
+                    execSync(
+                      `curl -fSL -o "${thumbnailPath}" -H "Authorization: token ${process.env.GITHUB_TOKEN}" -H "Accept: application/octet-stream" -H "User-Agent: GitHub-Actions" "${imageUrl}"`,
+                      { stdio: 'pipe', timeout: 30000 }
+                    );
+                    downloaded = true;
+                  } catch (err) {
+                    try {
+                      execSync(
+                        `curl -fSL -o "${thumbnailPath}" -H "User-Agent: GitHub-Actions" "${imageUrl}"`,
+                        { stdio: 'pipe', timeout: 30000 }
+                      );
+                      downloaded = true;
+                    } catch (err2) {
+                      core.warning(`Failed to download thumbnail: ${err2.message}`);
+                    }
+                  }
+
+                  if (downloaded) {
+                    updated = setField(updated, 'thumbnail', thumbnailPath);
+                    // Remove old image_url if present
+                    updated = updated.replace(/\n  image_url:.*$/m, '');
+                    core.info(`Thumbnail saved to ${thumbnailPath}`);
+                  }
+                }
+              }
+
+              return updated;
+            });
+
+            if (!found) {
+              core.setFailed(`Paper with ID "${paperId}" not found in papers.yml`);
+              return;
+            }
+
+            // Write updated content
+            fs.writeFileSync(papersPath, updatedBlocks.join('\n'));
+
+            core.exportVariable('PAPER_ID', paperId);
+            core.exportVariable('PAPER_TITLE', paperTitle);
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add _data/papers.yml
+          git add assets/thumbnails/ 2>/dev/null || true
+          git diff --cached --quiet && echo "No changes to commit" && exit 0
+          git commit -m "Update paper ${PAPER_ID}: ${PAPER_TITLE}"
+          git push
+
+      - name: Close issue with comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const paperId = process.env.PAPER_ID;
+            const paperTitle = process.env.PAPER_TITLE;
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `Paper **${paperTitle}** (\`${paperId}\`) has been updated successfully. Closing this issue.`
+            });
+
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              state: 'closed'
+            });
+
+      # Trigger deploy - needed because github-actions[bot] pushes don't trigger other workflows
+      - name: Build Jekyll site
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4

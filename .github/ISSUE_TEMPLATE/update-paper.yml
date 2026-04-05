@@ -1,0 +1,165 @@
+name: "Update Paper"
+description: "Update an existing paper entry"
+labels: ["update-paper"]
+body:
+  - type: input
+    id: paper_id
+    attributes:
+      label: Paper ID
+      description: "ID of the paper to update (e.g., 2026-001)"
+      placeholder: "e.g., 2026-001"
+    validations:
+      required: true
+
+  - type: markdown
+    attributes:
+      value: "---\n**Fill in only the fields you want to update.** Leave the rest blank."
+
+  - type: input
+    id: title
+    attributes:
+      label: Paper Title
+      description: "Updated title (leave blank to keep current)"
+      placeholder: ""
+    validations:
+      required: false
+
+  - type: input
+    id: authors
+    attributes:
+      label: Authors
+      description: "Updated author list (leave blank to keep current)"
+      placeholder: ""
+    validations:
+      required: false
+
+  - type: dropdown
+    id: venue
+    attributes:
+      label: Venue
+      description: "Updated venue (leave blank to keep current)"
+      options:
+        - ""
+        - CoRL
+        - RSS
+        - ICRA
+        - IROS
+        - NeurIPS
+        - ICML
+        - ICLR
+        - CVPR
+        - Science Robotics
+        - T-RO
+        - RA-L
+        - arXiv
+        - Ongoing
+    validations:
+      required: false
+
+  - type: dropdown
+    id: field
+    attributes:
+      label: Field
+      description: "Updated research field (leave blank to keep current)"
+      options:
+        - ""
+        - grasping
+        - manipulation
+        - imitation_learning
+        - reinforcement_learning
+        - vla
+        - tactile
+        - dexterous
+        - sim2real
+    validations:
+      required: false
+
+  - type: dropdown
+    id: lang
+    attributes:
+      label: Language
+      description: "Updated language (leave blank to keep current)"
+      options:
+        - ""
+        - kor
+        - eng
+    validations:
+      required: false
+
+  - type: input
+    id: keywords
+    attributes:
+      label: Keywords
+      description: "Updated comma-separated keywords (leave blank to keep current)"
+      placeholder: ""
+    validations:
+      required: false
+
+  - type: input
+    id: presenter
+    attributes:
+      label: Presenter
+      description: "Updated presenter name (leave blank to keep current)"
+      placeholder: ""
+    validations:
+      required: false
+
+  - type: dropdown
+    id: status
+    attributes:
+      label: Status
+      description: "Updated status (leave blank to keep current)"
+      options:
+        - ""
+        - pending
+        - reviewed
+        - upcoming
+        - cancelled
+        - candidate
+    validations:
+      required: false
+
+  - type: textarea
+    id: tldr
+    attributes:
+      label: TL;DR
+      description: "Updated summary (leave blank to keep current)"
+      placeholder: ""
+    validations:
+      required: false
+
+  - type: input
+    id: paper_url
+    attributes:
+      label: Paper URL
+      description: "Updated paper link (leave blank to keep current)"
+      placeholder: "https://..."
+    validations:
+      required: false
+
+  - type: textarea
+    id: thumbnail
+    attributes:
+      label: Thumbnail Image
+      description: "Drag & drop a new thumbnail image (leave blank to keep current)"
+      placeholder: "Drag and drop an image here..."
+    validations:
+      required: false
+
+  - type: input
+    id: slides
+    attributes:
+      label: Slides URL
+      description: "Updated slides link (leave blank to keep current)"
+      placeholder: "e.g., https://drive.google.com/file/d/.../view"
+    validations:
+      required: false
+
+  - type: input
+    id: video
+    attributes:
+      label: Video URL
+      description: "Updated video link (leave blank to keep current)"
+      placeholder: "e.g., https://www.youtube.com/watch?v=..."
+    validations:
+      required: false

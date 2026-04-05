@@ -3,6 +3,15 @@ description: "Submit a new paper for review"
 labels: ["add-paper"]
 body:
   - type: input
+    id: paper_id
+    attributes:
+      label: Paper ID
+      description: "Custom paper ID (e.g., initials-number)"
+      placeholder: "e.g., cy-001"
+    validations:
+      required: true
+
+  - type: input
     id: title
     attributes:
       label: Paper Title
@@ -47,6 +56,7 @@ body:
         - T-RO
         - RA-L
         - arXiv
+        - Ongoing
     validations:
       required: true
 
