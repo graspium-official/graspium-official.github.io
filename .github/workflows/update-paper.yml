@@ -15,6 +15,42 @@ jobs:
       id-token: write
 
     steps:
+      - name: Check permission
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const sender = context.payload.sender.login;
+
+            // Check if user is a collaborator (includes org members with repo access)
+            try {
+              const { data } = await github.rest.repos.getCollaboratorPermissionLevel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                username: sender,
+              });
+              const allowed = ['admin', 'write', 'maintain'];
+              if (!allowed.includes(data.permission)) {
+                throw new Error('insufficient');
+              }
+              core.info(`User ${sender} has '${data.permission}' permission. Allowed.`);
+            } catch (err) {
+              core.warning(`User ${sender} is not an authorized collaborator. Closing issue.`);
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: `Sorry @${sender}, only repository collaborators can update papers. This issue will be closed.`
+              });
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                state: 'closed'
+              });
+              core.setFailed('Unauthorized user.');
+              return;
+            }
+
       - name: Checkout repository
         uses: actions/checkout@v4
 
