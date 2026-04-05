@@ -53,6 +53,7 @@ body:
         - RA-L
         - arXiv
         - Ongoing
+        - Done
     validations:
       required: false
 
