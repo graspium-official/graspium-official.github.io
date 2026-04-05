@@ -63,6 +63,22 @@ jobs:
               }
             }
 
+            // Helper: update or append a multi-line field using YAML block scalar (|)
+            function setBlockField(block, key, value) {
+              const lines = value.split('\n').map(l => `    ${l}`).join('\n');
+              const blockYaml = `  ${key}: |\n${lines}`;
+              // Remove existing block scalar or inline value for this key
+              const blockRegex = new RegExp(`  ${key}: \\|\\n(    .*\\n?)*`, 'm');
+              const inlineRegex = new RegExp(`^  ${key}:.*$`, 'm');
+              if (blockRegex.test(block)) {
+                return block.replace(blockRegex, blockYaml);
+              } else if (inlineRegex.test(block)) {
+                return block.replace(inlineRegex, blockYaml);
+              } else {
+                return block.trimEnd() + '\n' + blockYaml + '\n';
+              }
+            }
+
             // Helper: update keywords (multi-line list)
             function setKeywords(block, kwString) {
               const kwList = kwString.split(',').map(k => k.trim()).filter(Boolean);
@@ -122,10 +138,17 @@ jobs:
               // Values to ignore (empty, no response, or dropdown default)
               const skipValues = ['', '_No response_', 'None', 'none', 'Leave blank to keep current'];
 
+              // Multi-line fields that should use block scalar (|) when they contain newlines
+              const multiLineKeys = ['tldr', 'notes'];
+
               for (const [formKey, yamlKey] of Object.entries(simpleFields)) {
                 const val = fields[formKey];
                 if (val && !skipValues.includes(val.trim())) {
-                  updated = setField(updated, yamlKey, val);
+                  if (multiLineKeys.includes(formKey) && val.includes('\n')) {
+                    updated = setBlockField(updated, yamlKey, val);
+                  } else {
+                    updated = setField(updated, yamlKey, val);
+                  }
                   if (formKey === 'title') paperTitle = val;
                 }
               }

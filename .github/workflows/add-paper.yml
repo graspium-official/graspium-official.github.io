@@ -74,6 +74,12 @@ jobs:
             // Escape double quotes in strings
             function esc(s) { return s.replace(/"/g, '\\"'); }
 
+            // Format multi-line text as YAML block scalar (|)
+            function blockScalar(key, text) {
+              const lines = text.split('\n').map(l => `    ${l}`).join('\n');
+              return `\n  ${key}: |\n${lines}`;
+            }
+
             // Build YAML entry
             let entry = `\n- id: "${newId}"`;
             entry += `\n  title: "${esc(title)}"`;
@@ -88,7 +94,11 @@ jobs:
             entry += `\n  status: "pending"`;
 
             if (tldr && tldr !== '_No response_') {
-              entry += `\n  tldr: "${esc(tldr)}"`;
+              if (tldr.includes('\n')) {
+                entry += blockScalar('tldr', tldr);
+              } else {
+                entry += `\n  tldr: "${esc(tldr)}"`;
+              }
             }
 
             if (paperUrl && paperUrl !== '_No response_') {
@@ -150,7 +160,11 @@ jobs:
             }
 
             if (notes && notes !== '_No response_') {
-              entry += `\n  notes: "${esc(notes)}"`;
+              if (notes.includes('\n')) {
+                entry += blockScalar('notes', notes);
+              } else {
+                entry += `\n  notes: "${esc(notes)}"`;
+              }
             }
 
             entry += '\n';
