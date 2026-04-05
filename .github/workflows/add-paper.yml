@@ -11,6 +11,8 @@ jobs:
     permissions:
       contents: write
       issues: write
+      pages: write
+      id-token: write
 
     steps:
       - name: Checkout repository
@@ -18,6 +20,8 @@ jobs:
 
       - name: Parse issue and append paper entry
         uses: actions/github-script@v7
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           script: |
             const fs = require('fs');
@@ -102,73 +106,44 @@ jobs:
 
             // Handle thumbnail: extract image URL from markdown or plain URL
             let thumbnailPath = '';
-            let thumbnailFallbackUrl = '';
             if (thumbnailRaw && thumbnailRaw !== '_No response_') {
-              // Try to extract image URL from markdown syntax ![alt](url) or plain URL
               const mdImgMatch = thumbnailRaw.match(/!\[.*?\]\((https?:\/\/[^\s)]+)\)/);
               const plainUrlMatch = thumbnailRaw.match(/(https?:\/\/[^\s]+\.(png|jpg|jpeg|gif|webp|svg)(\?[^\s]*)?)/i);
               const anyUrlMatch = thumbnailRaw.match(/(https?:\/\/[^\s)]+)/);
               const imageUrl = mdImgMatch ? mdImgMatch[1] : (plainUrlMatch ? plainUrlMatch[1] : (anyUrlMatch ? anyUrlMatch[1] : ''));
 
               if (imageUrl) {
-                // Determine file extension from URL
                 const extMatch = imageUrl.match(/\.(png|jpg|jpeg|gif|webp|svg)/i);
                 const ext = extMatch ? extMatch[1].toLowerCase() : 'png';
                 const filename = `${newId}.${ext}`;
                 thumbnailPath = `assets/thumbnails/${filename}`;
 
-                // Download the image with proper headers
-                const https = require('https');
-                const http = require('http');
-
+                // Download using GitHub API token for authenticated access
+                const { execSync } = require('child_process');
                 try {
-                  await new Promise((resolve, reject) => {
-                    const fetchUrl = (url, redirectCount = 0) => {
-                      if (redirectCount > 10) return reject(new Error('Too many redirects'));
-                      const parsedUrl = new URL(url);
-                      const client = parsedUrl.protocol === 'https:' ? https : http;
-                      const options = {
-                        hostname: parsedUrl.hostname,
-                        path: parsedUrl.pathname + parsedUrl.search,
-                        headers: {
-                          'User-Agent': 'GitHub-Actions-Bot',
-                          'Accept': 'image/*,*/*'
-                        }
-                      };
-                      client.get(options, (res) => {
-                        if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
-                          fetchUrl(res.headers.location, redirectCount + 1);
-                          return;
-                        }
-                        if (res.statusCode !== 200) {
-                          reject(new Error(`Failed to download image: HTTP ${res.statusCode}`));
-                          return;
-                        }
-                        const chunks = [];
-                        res.on('data', (chunk) => chunks.push(chunk));
-                        res.on('end', () => {
-                          const buffer = Buffer.concat(chunks);
-                          fs.writeFileSync(thumbnailPath, buffer);
-                          resolve();
-                        });
-                        res.on('error', reject);
-                      }).on('error', reject);
-                    };
-                    fetchUrl(imageUrl);
-                  });
+                  execSync(
+                    `curl -fSL -o "${thumbnailPath}" -H "Authorization: token ${process.env.GITHUB_TOKEN}" -H "Accept: application/octet-stream" -H "User-Agent: GitHub-Actions" "${imageUrl}"`,
+                    { stdio: 'pipe', timeout: 30000 }
+                  );
                   core.info(`Thumbnail saved to ${thumbnailPath}`);
                 } catch (err) {
-                  core.warning(`Failed to download thumbnail: ${err.message}. Falling back to image URL.`);
-                  thumbnailPath = '';
-                  thumbnailFallbackUrl = imageUrl;
+                  core.warning(`Authenticated download failed, retrying without token...`);
+                  try {
+                    execSync(
+                      `curl -fSL -o "${thumbnailPath}" -H "User-Agent: GitHub-Actions" "${imageUrl}"`,
+                      { stdio: 'pipe', timeout: 30000 }
+                    );
+                    core.info(`Thumbnail saved to ${thumbnailPath} (public)`);
+                  } catch (err2) {
+                    core.warning(`Failed to download thumbnail: ${err2.message}`);
+                    thumbnailPath = '';
+                  }
                 }
               }
             }
 
             if (thumbnailPath) {
               entry += `\n  thumbnail: "${thumbnailPath}"`;
-            } else if (thumbnailFallbackUrl) {
-              entry += `\n  image_url: "${esc(thumbnailFallbackUrl)}"`;
             }
 
             if (slidesUrl && slidesUrl !== '_No response_') {
@@ -217,3 +192,16 @@ jobs:
               issue_number: context.issue.number,
               state: 'closed'
             });
+
+      # Trigger deploy - needed because github-actions[bot] pushes don't trigger other workflows
+      - name: Build Jekyll site
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
