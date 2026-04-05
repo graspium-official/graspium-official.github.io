@@ -114,11 +114,29 @@ body:
     validations:
       required: false
 
-  - type: input
-    id: thumbnail_url
+  - type: textarea
+    id: thumbnail
     attributes:
-      label: Thumbnail URL
-      description: "Image URL for the paper card (optional)"
-      placeholder: "https://..."
+      label: Thumbnail Image
+      description: "Drag & drop an image here for the paper card thumbnail (optional). You can also paste an image URL."
+      placeholder: "Drag and drop an image here, or paste an image URL..."
+    validations:
+      required: false
+
+  - type: input
+    id: slides
+    attributes:
+      label: Slides URL
+      description: "Link to presentation slides (optional)"
+      placeholder: "e.g., https://drive.google.com/file/d/1XqAataCxMdRTAElNjll_1FKzdYP9TnK0/view?usp=sharing"
+    validations:
+      required: false
+
+  - type: input
+    id: video
+    attributes:
+      label: Video URL
+      description: "Link to presentation video (optional)"
+      placeholder: "e.g., https://www.youtube.com/watch?v=DAYDULXfEDc"
     validations:
       required: false

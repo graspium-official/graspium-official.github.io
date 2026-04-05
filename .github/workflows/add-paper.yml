@@ -41,7 +41,9 @@ jobs:
             const presenter = parseField('Presenter');
             const tldr = parseField('TL;DR');
             const paperUrl = parseField('Paper URL');
-            const thumbnailUrl = parseField('Thumbnail URL');
+            const thumbnailRaw = parseField('Thumbnail Image');
+            const slidesUrl = parseField('Slides URL');
+            const videoUrl = parseField('Video URL');
 
             if (!title || !authors || !venue || !field || !lang || !keywords || !presenter) {
               core.setFailed('Missing required fields in the issue body.');
@@ -98,8 +100,67 @@ jobs:
               entry += `\n  paper: "#"`;
             }
 
-            if (thumbnailUrl && thumbnailUrl !== '_No response_') {
-              entry += `\n  image_url: "${esc(thumbnailUrl)}"`;
+            // Handle thumbnail: extract image URL from markdown or plain URL
+            let thumbnailPath = '';
+            if (thumbnailRaw && thumbnailRaw !== '_No response_') {
+              // Try to extract image URL from markdown syntax ![alt](url) or plain URL
+              const mdImgMatch = thumbnailRaw.match(/!\[.*?\]\((https?:\/\/[^\s)]+)\)/);
+              const plainUrlMatch = thumbnailRaw.match(/(https?:\/\/[^\s]+\.(png|jpg|jpeg|gif|webp|svg)(\?[^\s]*)?)/i);
+              const anyUrlMatch = thumbnailRaw.match(/(https?:\/\/[^\s)]+)/);
+              const imageUrl = mdImgMatch ? mdImgMatch[1] : (plainUrlMatch ? plainUrlMatch[1] : (anyUrlMatch ? anyUrlMatch[1] : ''));
+
+              if (imageUrl) {
+                // Determine file extension from URL
+                const extMatch = imageUrl.match(/\.(png|jpg|jpeg|gif|webp|svg)/i);
+                const ext = extMatch ? extMatch[1].toLowerCase() : 'png';
+                const filename = `${newId}.${ext}`;
+                thumbnailPath = `assets/thumbnails/${filename}`;
+
+                // Download the image
+                const https = require('https');
+                const http = require('http');
+                const path = require('path');
+
+                await new Promise((resolve, reject) => {
+                  const fetchUrl = (url, redirectCount = 0) => {
+                    if (redirectCount > 5) return reject(new Error('Too many redirects'));
+                    const client = url.startsWith('https') ? https : http;
+                    client.get(url, (res) => {
+                      if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+                        fetchUrl(res.headers.location, redirectCount + 1);
+                        return;
+                      }
+                      if (res.statusCode !== 200) {
+                        reject(new Error(`Failed to download image: ${res.statusCode}`));
+                        return;
+                      }
+                      const chunks = [];
+                      res.on('data', (chunk) => chunks.push(chunk));
+                      res.on('end', () => {
+                        const buffer = Buffer.concat(chunks);
+                        fs.writeFileSync(thumbnailPath, buffer);
+                        resolve();
+                      });
+                      res.on('error', reject);
+                    }).on('error', reject);
+                  };
+                  fetchUrl(imageUrl);
+                });
+
+                core.info(`Thumbnail saved to ${thumbnailPath}`);
+              }
+            }
+
+            if (thumbnailPath) {
+              entry += `\n  thumbnail: "${thumbnailPath}"`;
+            }
+
+            if (slidesUrl && slidesUrl !== '_No response_') {
+              entry += `\n  slides: "${esc(slidesUrl)}"`;
+            }
+
+            if (videoUrl && videoUrl !== '_No response_') {
+              entry += `\n  video: "${esc(videoUrl)}"`;
             }
 
             entry += '\n';
@@ -116,6 +177,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add _data/papers.yml
+          git add assets/thumbnails/ 2>/dev/null || true
           git commit -m "Add paper ${NEW_PAPER_ID}: ${PAPER_TITLE}"
           git push
 
