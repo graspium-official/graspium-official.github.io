@@ -12,12 +12,23 @@
   tldr: "First Meetup for Roles"
   image_url: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400&h=260&fit=crop"
   notes: |
-    [결정된 것]
-    활동 방식:
+    [Rule]
     인당 모두 논문 1개당 1-2 page 정도의 발표자료 공유
     템플릿 style은 자유, 들어가야할 내용은 필수
     지각시 과자 혹은 음료수
-
+    
+    [TODO]
+    Update review page (6 April 2026)
+    04/09 (목) 6PM 미팅 자료 준비
+    참고 자료(템플릿 등): Materials
+    각자 미팅 활용자료: 미팅 후 Meeting Material에 업로드
+    
+    [Research Interest]
+    안찬영 / In-hand manipulation via haptic data
+    김예솔 / 안정성 조건을 물리적으로 어떻게 인지 - 적용할지 선행연구
+    백기원 / dexterous manipulation CV based grasp pose 생성
+    이재성 / dexterous manipulation 모방학습 - data glove 통한 동작 전이
+    허정 / FT 센서 기반 핸드 제어 관심
     [해야할 것]
     6 April 2026 까지 리뷰할 논문 올리기
     04/09 (목) 6PM 미팅 자료 준비
