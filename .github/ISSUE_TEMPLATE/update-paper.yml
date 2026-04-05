@@ -20,7 +20,7 @@ body:
     attributes:
       label: Paper Title
       description: "Updated title (leave blank to keep current)"
-      placeholder: ""
+      placeholder: "Leave blank to keep current"
     validations:
       required: false
 
@@ -29,7 +29,7 @@ body:
     attributes:
       label: Authors
       description: "Updated author list (leave blank to keep current)"
-      placeholder: ""
+      placeholder: "Leave blank to keep current"
     validations:
       required: false
 
@@ -91,7 +91,7 @@ body:
     attributes:
       label: Keywords
       description: "Updated comma-separated keywords (leave blank to keep current)"
-      placeholder: ""
+      placeholder: "Leave blank to keep current"
     validations:
       required: false
 
@@ -100,7 +100,7 @@ body:
     attributes:
       label: Presenter
       description: "Updated presenter name (leave blank to keep current)"
-      placeholder: ""
+      placeholder: "Leave blank to keep current"
     validations:
       required: false
 
@@ -124,7 +124,7 @@ body:
     attributes:
       label: TL;DR
       description: "Updated summary (leave blank to keep current)"
-      placeholder: ""
+      placeholder: "Leave blank to keep current"
     validations:
       required: false
 
