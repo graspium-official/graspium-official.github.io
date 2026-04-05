@@ -150,3 +150,12 @@ body:
       placeholder: "e.g., https://www.youtube.com/watch?v=DAYDULXfEDc"
     validations:
       required: false
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: "Review notes or key insights from the paper (optional)"
+      placeholder: "e.g., Key insight: flow matching outperforms diffusion for action generation..."
+    validations:
+      required: false

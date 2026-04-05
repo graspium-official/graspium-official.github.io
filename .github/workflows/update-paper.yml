@@ -97,6 +97,7 @@ jobs:
                 paper: parseField('Paper URL'),
                 slides: parseField('Slides URL'),
                 video: parseField('Video URL'),
+                notes: parseField('Notes'),
               };
               const thumbnailRaw = parseField('Thumbnail Image');
 
@@ -115,6 +116,7 @@ jobs:
                 paper: 'paper',
                 slides: 'slides',
                 video: 'video',
+                notes: 'notes',
               };
 
               // Values to ignore (empty, no response, or dropdown default)

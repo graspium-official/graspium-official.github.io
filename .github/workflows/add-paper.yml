@@ -49,6 +49,7 @@ jobs:
             const thumbnailRaw = parseField('Thumbnail Image');
             const slidesUrl = parseField('Slides URL');
             const videoUrl = parseField('Video URL');
+            const notes = parseField('Notes');
 
             if (!newId || !title || !authors || !venue || !field || !lang || !keywords || !presenter) {
               core.setFailed('Missing required fields in the issue body.');
@@ -146,6 +147,10 @@ jobs:
 
             if (videoUrl && videoUrl !== '_No response_') {
               entry += `\n  video: "${esc(videoUrl)}"`;
+            }
+
+            if (notes && notes !== '_No response_') {
+              entry += `\n  notes: "${esc(notes)}"`;
             }
 
             entry += '\n';

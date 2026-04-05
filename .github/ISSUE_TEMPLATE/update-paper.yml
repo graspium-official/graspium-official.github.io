@@ -163,3 +163,12 @@ body:
       placeholder: "e.g., https://www.youtube.com/watch?v=..."
     validations:
       required: false
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: "Updated review notes or key insights (leave blank to keep current)"
+      placeholder: "Leave blank to keep current"
+    validations:
+      required: false
