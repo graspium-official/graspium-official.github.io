@@ -102,6 +102,7 @@ jobs:
 
             // Handle thumbnail: extract image URL from markdown or plain URL
             let thumbnailPath = '';
+            let thumbnailFallbackUrl = '';
             if (thumbnailRaw && thumbnailRaw !== '_No response_') {
               // Try to extract image URL from markdown syntax ![alt](url) or plain URL
               const mdImgMatch = thumbnailRaw.match(/!\[.*?\]\((https?:\/\/[^\s)]+)\)/);
@@ -116,43 +117,58 @@ jobs:
                 const filename = `${newId}.${ext}`;
                 thumbnailPath = `assets/thumbnails/${filename}`;
 
-                // Download the image
+                // Download the image with proper headers
                 const https = require('https');
                 const http = require('http');
-                const path = require('path');
 
-                await new Promise((resolve, reject) => {
-                  const fetchUrl = (url, redirectCount = 0) => {
-                    if (redirectCount > 5) return reject(new Error('Too many redirects'));
-                    const client = url.startsWith('https') ? https : http;
-                    client.get(url, (res) => {
-                      if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
-                        fetchUrl(res.headers.location, redirectCount + 1);
-                        return;
-                      }
-                      if (res.statusCode !== 200) {
-                        reject(new Error(`Failed to download image: ${res.statusCode}`));
-                        return;
-                      }
-                      const chunks = [];
-                      res.on('data', (chunk) => chunks.push(chunk));
-                      res.on('end', () => {
-                        const buffer = Buffer.concat(chunks);
-                        fs.writeFileSync(thumbnailPath, buffer);
-                        resolve();
-                      });
-                      res.on('error', reject);
-                    }).on('error', reject);
-                  };
-                  fetchUrl(imageUrl);
-                });
-
-                core.info(`Thumbnail saved to ${thumbnailPath}`);
+                try {
+                  await new Promise((resolve, reject) => {
+                    const fetchUrl = (url, redirectCount = 0) => {
+                      if (redirectCount > 10) return reject(new Error('Too many redirects'));
+                      const parsedUrl = new URL(url);
+                      const client = parsedUrl.protocol === 'https:' ? https : http;
+                      const options = {
+                        hostname: parsedUrl.hostname,
+                        path: parsedUrl.pathname + parsedUrl.search,
+                        headers: {
+                          'User-Agent': 'GitHub-Actions-Bot',
+                          'Accept': 'image/*,*/*'
+                        }
+                      };
+                      client.get(options, (res) => {
+                        if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+                          fetchUrl(res.headers.location, redirectCount + 1);
+                          return;
+                        }
+                        if (res.statusCode !== 200) {
+                          reject(new Error(`Failed to download image: HTTP ${res.statusCode}`));
+                          return;
+                        }
+                        const chunks = [];
+                        res.on('data', (chunk) => chunks.push(chunk));
+                        res.on('end', () => {
+                          const buffer = Buffer.concat(chunks);
+                          fs.writeFileSync(thumbnailPath, buffer);
+                          resolve();
+                        });
+                        res.on('error', reject);
+                      }).on('error', reject);
+                    };
+                    fetchUrl(imageUrl);
+                  });
+                  core.info(`Thumbnail saved to ${thumbnailPath}`);
+                } catch (err) {
+                  core.warning(`Failed to download thumbnail: ${err.message}. Falling back to image URL.`);
+                  thumbnailPath = '';
+                  thumbnailFallbackUrl = imageUrl;
+                }
               }
             }
 
             if (thumbnailPath) {
               entry += `\n  thumbnail: "${thumbnailPath}"`;
+            } else if (thumbnailFallbackUrl) {
+              entry += `\n  image_url: "${esc(thumbnailFallbackUrl)}"`;
             }
 
             if (slidesUrl && slidesUrl !== '_No response_') {
