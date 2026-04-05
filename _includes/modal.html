@@ -43,7 +43,7 @@
       {% if p.notes %}
         <div class="modal-notes">
           <div class="modal-notes-label">Review Notes</div>
-          <div class="modal-notes-content">{{ p.notes }}</div>
+          <div class="modal-notes-content">{{ p.notes | newline_to_br }}</div>
         </div>
       {% endif %}
 
