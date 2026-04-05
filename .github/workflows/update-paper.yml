@@ -117,16 +117,19 @@ jobs:
                 video: 'video',
               };
 
+              // Values to ignore (empty, no response, or dropdown default)
+              const skipValues = ['', '_No response_', 'None', 'none', 'Leave blank to keep current'];
+
               for (const [formKey, yamlKey] of Object.entries(simpleFields)) {
                 const val = fields[formKey];
-                if (val && val !== '_No response_') {
+                if (val && !skipValues.includes(val.trim())) {
                   updated = setField(updated, yamlKey, val);
                   if (formKey === 'title') paperTitle = val;
                 }
               }
 
               // Keywords (multi-line)
-              if (fields.keywords && fields.keywords !== '_No response_') {
+              if (fields.keywords && !skipValues.includes(fields.keywords.trim())) {
                 updated = setKeywords(updated, fields.keywords);
               }
 

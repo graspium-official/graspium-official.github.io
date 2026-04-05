@@ -6,8 +6,8 @@ body:
     id: paper_id
     attributes:
       label: Paper ID
-      description: "ID of the paper to update (e.g., 2026-001)"
-      placeholder: "e.g., 2026-001"
+      description: "ID of the paper to update (e.g., cy-001)"
+      placeholder: "e.g., cy-001"
     validations:
       required: true
 
