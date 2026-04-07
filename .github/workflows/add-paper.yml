@@ -101,7 +101,8 @@ jobs:
             }
 
             // Format date as YYYY-MM-DD
-            const date = now.toISOString().split('T')[0];
+            const date = new Date().toISOString().split('T')[0];
+            // const date = now.toISOString().split('T')[0];
 
             // Build keywords YAML list
             const kwList = keywords.split(',').map(k => k.trim()).filter(Boolean);
