@@ -82,7 +82,7 @@ body:
     id: lang
     attributes:
       label: Language
-      description: "Presentation language"
+      description: "Presentation language: depends on your materials! (pdf..)"
       options:
         - kor
         - eng
@@ -132,7 +132,7 @@ body:
       description: "Drag & drop an image here for the paper card thumbnail (optional). You can also paste an image URL."
       placeholder: "Drag and drop an image here, or paste an image URL..."
     validations:
-      required: false
+      required: true
 
   - type: input
     id: slides
