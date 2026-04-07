@@ -62,3 +62,17 @@
   status: "pending"
   paper: "https://arxiv.org/abs/1910.10985"
   thumbnail: "assets/thumbnails/ys-001.png"
+
+- id: "js-001"
+  title: "Towards Human-Like Manipulation through RL-Augmented Teleoperation and Mixture-of-Dexterous-Experts VLA"
+  authors: "tang et al"
+  venue: "CoRL"
+  date: "2026-04-07"
+  field: "grasping"
+  lang: "kor"
+  keywords:
+    - "Dexterous"
+    - "VLA"
+  presenter: "Jaesung Lee"
+  status: "pending"
+  paper: "https://arxiv.org/abs/2603.08122"
