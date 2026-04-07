@@ -152,7 +152,8 @@ jobs:
               const mdImgMatch = thumbnailRaw.match(/!\[.*?\]\((https?:\/\/[^\s)]+)\)/);
               const plainUrlMatch = thumbnailRaw.match(/(https?:\/\/[^\s]+\.(png|jpg|jpeg|gif|webp|svg)(\?[^\s]*)?)/i);
               const anyUrlMatch = thumbnailRaw.match(/(https?:\/\/[^\s)]+)/);
-              const imageUrl = mdImgMatch ? mdImgMatch[1] : (plainUrlMatch ? plainUrlMatch[1] : (anyUrlMatch ? anyUrlMatch[1] : ''));
+              const imageUrlRaw = mdImgMatch ? mdImgMatch[1] : (plainUrlMatch ? plainUrlMatch[1] : (anyUrlMatch ? anyUrlMatch[1] : ''));
+              const imageUrl = imageUrlRaw.replace(/^["'\s]+|["'\s]+$/g, '');
 
               if (imageUrl) {
                 const extMatch = imageUrl.match(/\.(png|jpg|jpeg|gif|webp|svg)/i);
