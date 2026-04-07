@@ -47,3 +47,17 @@
   image_url: "https://github.com/user-attachments/assets/a2c7fb31-30d4-422b-b028-0ee4e154075d"
   tldr: "TBD (0409)"
   notes: "TBD (0409) slide and review"
+
+- id: "ys-001"
+  title: "Learning Hierarchical Control for Robust In-Hand Manipulation"
+  authors: "Tingguang Li, Krishnan Srinivasan, Max Qing-Hu Meng et al."
+  venue: "ICRA"
+  date: "2026-04-07"
+  field: "manipulation"
+  lang: "kor"
+  keywords:
+    - "Hierarchical Control"
+    - "Manipulation"
+  presenter: "Yesol Kim"
+  status: "pending"
+  paper: "https://arxiv.org/abs/1910.10985"
