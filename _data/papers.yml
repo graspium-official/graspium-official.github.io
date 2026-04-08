@@ -76,3 +76,21 @@
   presenter: "Jaesung Lee"
   status: "pending"
   paper: "https://arxiv.org/abs/2603.08122"
+
+- id: "GWB-001"
+  title: "AffordGrasp_ In-Context Affordance Reasoning for Open-Vocabulary Task-Oriented Grasping in Clutter"
+  authors: "Yingbo Tang, Shuaike Zhang, Xiaoshuai Hao et al"
+  venue: "IROS"
+  date: "2026-04-08"
+  field: "grasping"
+  lang: "eng"
+  keywords:
+    - "Grasping"
+    - "Affordance"
+  presenter: "Giwon Baek"
+  status: "pending"
+  tldr: |
+    Affordance grasping in cluttered scene.
+    It also include open-vocabulary and in-context affordance reasoning.
+  paper: "https://arxiv.org/abs/2503.00778"
+  thumbnail: "assets/thumbnails/GWB-001.png"
