@@ -89,9 +89,13 @@
     - "Grasping"
     - "Affordance"
   presenter: "Giwon Baek"
-  status: "pending"
   tldr: |
     Affordance grasping in cluttered scene.
     It also include open-vocabulary and in-context affordance reasoning.
   paper: "https://arxiv.org/abs/2503.00778"
   thumbnail: "assets/thumbnails/GWB-001.png"
+  status: "reviewed"
+  slides: "https://drive.google.com/file/d/1B_Eu4pg46e0zKMO_qf_-zvjmLimsEND8/view?usp=drive_link"
+  notes: |
+    Open-vocabulary in-context affordance grasping.
+    Cluttered scene but only possible in top-down grasp.
