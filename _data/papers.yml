@@ -63,6 +63,7 @@
   status: "pending"
   paper: "https://arxiv.org/abs/1910.10985"
   thumbnail: "assets/thumbnails/ys-001.png"
+  slides: "https://drive.google.com/file/d/16PTXBMtKnd36XXAUO3uZuYsIonLpEFD-/view?usp=drive_link"
 
 - id: "js-001"
   title: "Towards Human-Like Manipulation through RL-Augmented Teleoperation and Mixture-of-Dexterous-Experts VLA"
