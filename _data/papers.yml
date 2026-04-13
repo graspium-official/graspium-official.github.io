@@ -78,8 +78,8 @@
   status: "pending"
   paper: "https://arxiv.org/abs/2603.08122"
   lang: "eng"
-  slides: "https://drive.google.com/drive/folders/1jBNIlhRsnAHQUu74Die0vLfuzACeKPhJ"
   thumbnail: "assets/thumbnails/js-001.png"
+  slides: "https://drive.google.com/file/d/1kTkAK9tnbxVHbPIPW2fHMC1zLndAGkC4/view?usp=sharing"
 
 - id: "GWB-001"
   title: "AffordGrasp_ In-Context Affordance Reasoning for Open-Vocabulary Task-Oriented Grasping in Clutter"
