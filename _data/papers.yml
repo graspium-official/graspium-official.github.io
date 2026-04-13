@@ -100,3 +100,20 @@
   notes: |
     Open-vocabulary in-context affordance grasping.
     Cluttered scene but only possible in top-down grasp.
+
+- id: "hj-001"
+  title: "ReTac-ACT: A State-Gated Vision-Tactile Fusion Transformer for Precision Assembly"
+  authors: "Minchi Ruan, LiangQing Zhou, Hongtong Li, Zongtao Wang, ZhaoMing Lu, Jianwei Zhang, Bin Fang"
+  venue: "arXiv"
+  date: "2026-04-13"
+  field: "tactile"
+  lang: "kor"
+  keywords:
+    - "Precision"
+    - "Sensory"
+  presenter: "HEO JEONG"
+  status: "pending"
+  tldr: "[260409.pdf](https://github.com/user-attachments/files/26673293/260409.pdf)"
+  paper: "https://arxiv.org/abs/2603.09565"
+  thumbnail: "assets/thumbnails/hj-001.png"
+  notes: "Vision-Tactile cross modal Dynamic Fusion Module"
