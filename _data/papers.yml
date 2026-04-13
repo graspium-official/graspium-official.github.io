@@ -71,13 +71,13 @@
   venue: "CoRL"
   date: "2026-04-07"
   field: "grasping"
-  lang: "kor"
   keywords:
     - "Dexterous"
     - "VLA"
   presenter: "Jaesung Lee"
   status: "pending"
   paper: "https://arxiv.org/abs/2603.08122"
+  lang: "eng"
 
 - id: "GWB-001"
   title: "AffordGrasp_ In-Context Affordance Reasoning for Open-Vocabulary Task-Oriented Grasping in Clutter"
