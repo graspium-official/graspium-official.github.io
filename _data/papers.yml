@@ -118,3 +118,17 @@
   thumbnail: "assets/thumbnails/hj-001.png"
   notes: "Vision-Tactile cross modal Dynamic Fusion Module"
   slides: "https://drive.google.com/file/d/1kK9Tzb-2X3NxBXhEG9uwvuKWPQGcjVD3/view?usp=drive_link"
+
+- id: "ys-002"
+  title: "Residual Reinforcement Learning for Robot Control"
+  authors: "Tobias Johannink, Shikhar Bahl, Ashvin Nair et al."
+  venue: "ICRA"
+  date: "2026-04-13"
+  field: "reinforcement_learning"
+  lang: "kor"
+  keywords:
+    - "Residual reinforcement learning"
+  presenter: "Yesol Kim"
+  status: "pending"
+  paper: "#"
+  thumbnail: "assets/thumbnails/ys-002.png"
