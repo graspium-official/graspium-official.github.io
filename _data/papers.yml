@@ -134,6 +134,7 @@
   status: "pending"
   paper: "#"
   thumbnail: "assets/thumbnails/ys-002.png"
+  slides: "https://drive.google.com/file/d/1eYEK43WTkRcirDOx-m0RUk7thkLbDJKj/view?usp=drive_link"
 
 - id: "cy-002"
   title: "Tactile Beyond Pixels: Multisensory Touch Representations for Robot Manipulation"
