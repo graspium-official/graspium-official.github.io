@@ -204,3 +204,20 @@
   status: "pending"
   paper: "#"
   thumbnail: "assets/thumbnails/ys-003.png"
+
+- id: "js-002"
+  title: "Feel Robot Feels: Tactile Feedback Array Glove for Dexterous Manipulation"
+  authors: "Feiyu Jia, Xiaojie Niu1,  Sizhe Yang, Jiangmiao Pang et al."
+  venue: "arXiv"
+  date: "2026-04-21"
+  field: "imitation_learning"
+  lang: "eng"
+  keywords:
+    - "Tactile Glove"
+    - "Teleoperation"
+  presenter: "Jaesung Lee"
+  status: "pending"
+  tldr: "TAG is a low-cost glove system that enables high-precision dexterous teleoperation by combining drift-free 21-DoF motion capture with high-resolution tactile feedback, allowing operators to feel real-time contact geometry and forces."
+  paper: "https://arxiv.org/abs/2603.28542"
+  thumbnail: "assets/thumbnails/js-002.png"
+  slides: "https://drive.google.com/file/d/1pgbfB1JQOWOitpFZkDKnuiVlJWuMpcch/view?usp=drive_link"
