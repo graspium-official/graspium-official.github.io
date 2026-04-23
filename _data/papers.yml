@@ -170,6 +170,7 @@
   tldr: "MimicTouch is a multi-modal imitation learning framework that efficiently collects human tactile demonstrations, learns human-like tactile-guided control strategies from them, and zero-shot generalizes to different task settings."
   paper: "https://openreview.net/forum?id=7yMZAUkXa4"
   thumbnail: "assets/thumbnails/cy-003.png"
+  slides: "https://drive.google.com/file/d/1Xe-rkz_ddGCNNjj_5SunxEfxS9dQNlDm/view?usp=sharing"
 
 - id: "GWB-002"
   title: "AnyDexGrasp_ General Dexterous Grasping for Different Hands with Human-level Learning Efficiency"
