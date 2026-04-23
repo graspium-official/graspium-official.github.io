@@ -207,7 +207,6 @@
   thumbnail: "assets/thumbnails/ys-003.png"
 
 - id: "js-002"
-  title: "Feel Robot Feels: Tactile Feedback Array Glove for Dexterous Manipulation"
   authors: "Feiyu Jia, Xiaojie Niu1,  Sizhe Yang, Jiangmiao Pang et al."
   venue: "arXiv"
   date: "2026-04-21"
@@ -222,3 +221,4 @@
   paper: "https://arxiv.org/abs/2603.28542"
   thumbnail: "assets/thumbnails/js-002.png"
   slides: "https://drive.google.com/file/d/1pgbfB1JQOWOitpFZkDKnuiVlJWuMpcch/view?usp=drive_link"
+  title: "Feel Robot Feels: Tactile Feedback Array Glove for Dexterous Manipulation"
