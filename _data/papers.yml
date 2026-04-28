@@ -205,6 +205,7 @@
   status: "pending"
   paper: "#"
   thumbnail: "assets/thumbnails/ys-003.png"
+  slides: "https://drive.google.com/file/d/10Hi0u4cDkF5EnwaW8CjgSBTBK-hjBdL6/view?usp=drive_link"
 
 - id: "js-002"
   authors: "Feiyu Jia, Xiaojie Niu1,  Sizhe Yang, Jiangmiao Pang et al."
