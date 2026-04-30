@@ -244,18 +244,18 @@
   notes: "+) It can choose a direction to grasp"
 
 - id: "cy-004"
-  title: "Bootstrap your own latent: A new approach to self-supervised Learning"
-  authors: "Jean-Bastien Grill, Florian Strub, Florent Altch, et al."
-  venue: "NeurIPS"
   date: "2026-04-27"
-  field: "imitation_learning"
-  lang: "eng"
-  keywords:
-    - "Representation Learning"
-    - "Algorithm"
-  presenter: "Chanyoung Ahn"
   status: "pending"
   paper: "https://papers.nips.cc/paper/2020/file/f3ada80d5c4ee70142b17b8192b2958e-Paper.pdf"
+  title: "Exploring In-hand Manipulation via Reinforcement Learning: Trends and Challenges"
+  authors: "Chanyoung Ahn"
+  venue: "Done"
+  field: "reinforcement_learning"
+  lang: "eng"
+  presenter: "Chanyoung Ahn"
+  slides: "https://drive.google.com/file/d/199LI-vQ4BKDhvl7XLljDdGG2OQHkk_BF/view?usp=sharing"
+  keywords:
+    - "Reinforcement Learning"
   thumbnail: "assets/thumbnails/cy-004.png"
 
 - id: "js-003"
