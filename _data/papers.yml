@@ -87,7 +87,6 @@
   venue: "IROS"
   date: "2026-04-08"
   field: "grasping"
-  lang: "eng"
   keywords:
     - "Grasping"
     - "Affordance"
@@ -102,6 +101,7 @@
   notes: |
     Open-vocabulary in-context affordance grasping.
     Cluttered scene but only possible in top-down grasp.
+  lang: "kor"
 
 - id: "hj-001"
   title: "ReTac-ACT: A State-Gated Vision-Tactile Fusion Transformer for Precision Assembly"
