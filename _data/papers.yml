@@ -312,3 +312,17 @@
   paper: "#"
   thumbnail: "assets/thumbnails/js-004.png"
   slides: "https://drive.google.com/file/d/1AwObXNn4t7MUW-IsILtIyC5eNEu7TMW3/view?usp=drive_link"
+
+- id: "ys-004"
+  title: "Robust Adaptive Safe Robotic Grasping with Tactile Sensing"
+  authors: "e.g., K. Yitaek, K. Jeeseop, S. Christoffer et al."
+  venue: "Done"
+  date: "2026-05-06"
+  field: "grasping"
+  lang: "kor"
+  keywords:
+    - "Robust grasping"
+  presenter: "Yesol Kim"
+  status: "pending"
+  paper: "#"
+  thumbnail: "assets/thumbnails/ys-004.png"
