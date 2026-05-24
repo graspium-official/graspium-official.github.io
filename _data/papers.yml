@@ -365,3 +365,18 @@
   paper: "https://openreview.net/forum?id=sygvGP-YLfx"
   thumbnail: "assets/thumbnails/cy-005.png"
   slides: "https://drive.google.com/file/d/1F-bnaoUeB6m0oWcRuXEvVXSCmtwcBMJ8/view?usp=sharing"
+
+- id: "hj-002"
+  title: "Touch2Insert: Zero-Shot Peg Insertion by Touching Intersections of Peg and Hole"
+  authors: "Masaru Yajima, Yuma Shin, Rei Kawakami, Asako Kanezaki, Kei Ota"
+  venue: "ICRA"
+  date: "2026-05-24"
+  field: "tactile"
+  lang: "kor"
+  keywords:
+    - "Precision"
+    - "Tactile"
+  presenter: "Jeong Heo"
+  status: "pending"
+  paper: "https://arxiv.org/abs/2603.03627"
+  thumbnail: "assets/thumbnails/hj-002.png"
