@@ -396,3 +396,18 @@
   paper: "https://arxiv.org/abs/2509.18644"
   thumbnail: "assets/thumbnails/hj-003.png"
   slides: "https://drive.google.com/file/d/1wxSF5_ZAaM1POrYcYkvbcfo0v3aDXgXz/view?usp=drive_link"
+
+- id: "hj-004"
+  title: "Visual-Tactile Peg-in-Hole Assembly Learning from Peg-out-of-Hole Disassembly"
+  authors: "Yongqiang Zhao, Xuyang Zhang, Zhuo Chen, Matteo Leonetti, Emmanouil Spyrakos-Papastavridis, Shan Luo"
+  venue: "RA-L"
+  date: "2026-05-24"
+  field: "tactile"
+  lang: "kor"
+  keywords:
+    - "Visual-Tactile"
+    - "Peg-in-hole"
+  presenter: "Jeong Heo"
+  status: "pending"
+  paper: "https://arxiv.org/abs/2604.20712"
+  thumbnail: "assets/thumbnails/hj-004.png"
