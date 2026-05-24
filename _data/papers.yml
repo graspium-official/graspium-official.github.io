@@ -381,3 +381,17 @@
   paper: "https://arxiv.org/abs/2603.03627"
   thumbnail: "assets/thumbnails/hj-002.png"
   slides: "https://drive.google.com/file/d/1xDMCV8PDMUEtUnjH8tkDqCzsA6u2NMhq/view?usp=drive_link"
+
+- id: "hj-003"
+  title: "Do You Need Proprioceptive States in Visuomotor Policies?"
+  authors: "Juntu Zhao, Wenbo Lu, Di Zhang, Yufeng Liu, Yushen Liang, Tianluo Zhang, Yifeng Cao, Junyuan Xie, Yingdong Hu, Shengjie Wang, Junliang Guo, Dequan Wang and Yang Gao"
+  venue: "arXiv"
+  date: "2026-05-24"
+  field: "imitation_learning"
+  lang: "kor"
+  keywords:
+    - "Imitation Learning"
+  presenter: "Jeong Heo"
+  status: "pending"
+  paper: "https://arxiv.org/abs/2509.18644"
+  thumbnail: "assets/thumbnails/hj-003.png"
