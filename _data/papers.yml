@@ -412,3 +412,21 @@
   paper: "https://arxiv.org/abs/2604.20712"
   thumbnail: "assets/thumbnails/hj-004.png"
   slides: "https://drive.google.com/file/d/10Ci06M6LoMBXxfM3-m_VT7SWOT9Ra45P/view?usp=drive_link"
+
+- id: "js-005"
+  title: "GraspGen: A Diffusion-based Framework for 6-DOF Grasping with On-Generator Training"
+  authors: "Adithyavairavan.M    Balakumar.S    Clemens Eppner et al."
+  venue: "arXiv"
+  date: "2026-05-27"
+  field: "grasping"
+  lang: "kor"
+  keywords:
+    - "Grasping"
+  presenter: "JAESUNG LEE"
+  status: "pending"
+  tldr: |
+    1. Cad reconstruction use by point cloud 
+    2. Generator and Discreminator made in simulation
+  paper: "https://arxiv.org/abs/2507.13097"
+  thumbnail: "assets/thumbnails/js-005.png"
+  slides: "https://drive.google.com/file/d/1dp-btb2gFnjRq2947GA30g4kKFn9dY2t/view?usp=drive_link"
