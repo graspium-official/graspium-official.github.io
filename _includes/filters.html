@@ -1,4 +1,35 @@
 <div class="filter-section">
+  <div class="filter-row presenter-filter-row">
+    <div class="presenter-chip-bar">
+      {% assign presenters = "" %}
+      {% for paper in site.data.papers %}
+        {% assign name = paper.presenter | strip %}
+        {% unless presenters contains name %}
+          {% if presenters == "" %}
+            {% assign presenters = name %}
+          {% else %}
+            {% assign presenters = presenters | append: "|||" | append: name %}
+          {% endif %}
+        {% endunless %}
+      {% endfor %}
+      {% assign presenter_list = presenters | split: "|||" | sort %}
+      {% for name in presenter_list %}
+        {% assign gh = "" %}
+        {% for m in site.data.members %}
+          {% if m.name == name %}
+            {% assign gh = m.github %}
+          {% endif %}
+        {% endfor %}
+        <button class="presenter-chip" data-presenter="{{ name }}">
+          {% if gh != "" %}
+            <img src="https://github.com/{{ gh }}.png?size=40" alt="" class="presenter-chip-avatar" loading="lazy" />
+          {% endif %}
+          <span class="presenter-chip-name">{{ name }}</span>
+        </button>
+      {% endfor %}
+    </div>
+    <input class="search-input" type="text" placeholder="Search papers..." />
+  </div>
   <div class="filter-row">
     <div class="filter-bar">
       <button class="filter-btn active" data-field="all">All</button>
@@ -9,6 +40,5 @@
       <button class="lang-filter-btn filter-btn" data-lang="kor">KOR</button>
       <button class="lang-filter-btn filter-btn" data-lang="eng">ENG</button>
     </div>
-    <input class="search-input" type="text" placeholder="Search papers..." />
   </div>
 </div>

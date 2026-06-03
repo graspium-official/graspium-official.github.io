@@ -42,6 +42,10 @@
       document.documentElement.setAttribute('data-theme', 'dark');
     }
   </script>
+  {% if site.data.site.goatcounter %}
+  <script data-goatcounter="https://{{ site.data.site.goatcounter }}.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
+  {% endif %}
 </head>
 <body>
   <div class="site-wrapper">
@@ -95,6 +99,23 @@
       btn.addEventListener('click', () => {
         document.querySelectorAll('.filter-btn[data-field]').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
+        applyFilters();
+      });
+    });
+
+    // ─── Presenter Filtering ───
+    let activePresenter = null;
+    document.querySelectorAll('.presenter-chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const presenter = btn.dataset.presenter;
+        if (activePresenter === presenter) {
+          activePresenter = null;
+          btn.classList.remove('active');
+        } else {
+          activePresenter = presenter;
+          document.querySelectorAll('.presenter-chip').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+        }
         applyFilters();
       });
     });
@@ -177,6 +198,7 @@
         let show = true;
         if (field !== 'all' && cardField !== field) show = false;
         if (activeLang && cardLang !== activeLang) show = false;
+        if (activePresenter && card.dataset.presenter !== activePresenter) show = false;
         if (query && !text.includes(query)) show = false;
         if (activeKeyword) {
           const keywords = card.dataset.keywords ? card.dataset.keywords.split(',') : [];

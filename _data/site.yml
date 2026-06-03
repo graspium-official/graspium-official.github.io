@@ -52,6 +52,10 @@ link_icons:
   code: "</>"
   project: "◎"
 
+# ─── GoatCounter Analytics ───
+# Sign up at https://www.goatcounter.com and enter your site code below.
+goatcounter: "graspium"
+
 # ─── Default Thumbnails ───
 default_thumbnails:
   grasping: "assets/thumbnails/_default_grasping.jpg"

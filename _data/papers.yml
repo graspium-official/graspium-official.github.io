@@ -113,7 +113,7 @@
   keywords:
     - "Precision"
     - "Sensory"
-  presenter: "HEO JEONG"
+  presenter: "Jeong Heo"
   status: "pending"
   tldr: "[260409.pdf](https://github.com/user-attachments/files/26673293/260409.pdf)"
   paper: "https://arxiv.org/abs/2603.09565"
@@ -269,7 +269,7 @@
     - "Segmentation"
     - "SAM"
     - "Grasping"
-  presenter: "JAESUNG LEE"
+  presenter: "Jaesung Lee"
   status: "pending"
   tldr: "Segmentation + Grasping pose(griper) in one model"
   paper: "https://arxiv.org/abs/2409.12521"
@@ -306,7 +306,7 @@
   keywords:
     - "In-hand Manipulation"
     - "Imitation Learning"
-  presenter: "JAESUNG LEE"
+  presenter: "Jaesung Lee"
   status: "pending"
   tldr: "Exploring In-hand Manipulation via Imitation Learning, and Methods for Acquiring Expert Demonstrations"
   paper: "#"
@@ -422,7 +422,7 @@
   lang: "kor"
   keywords:
     - "Grasping"
-  presenter: "JAESUNG LEE"
+  presenter: "Jaesung Lee"
   status: "pending"
   tldr: |
     1. Cad reconstruction use by point cloud 

@@ -1,5 +1,27 @@
 <footer class="site-footer">
   <p class="section-label">
-    {{ site.data.site.name }} · Maintained on <a href="{{ site.data.site.github_url }}">GitHub</a> 
+    {{ site.data.site.name }}
+    {% if site.data.site.goatcounter %}
+      · <span id="gc-total"></span> visits
+    {% endif %}
+    · Maintained on <a href="{{ site.data.site.github_url }}">GitHub</a>
   </p>
 </footer>
+{% if site.data.site.goatcounter %}
+<script>
+  var defined = window.goatcounter;
+  function showCount() {
+    var r = new XMLHttpRequest();
+    r.open('GET', 'https://{{ site.data.site.goatcounter }}.goatcounter.com/counter/' + encodeURIComponent(location.pathname) + '.json');
+    r.onload = function() {
+      if (r.status === 200) {
+        var data = JSON.parse(r.responseText);
+        var el = document.getElementById('gc-total');
+        if (el) el.textContent = data.count_unique || data.count || '0';
+      }
+    };
+    r.send();
+  }
+  showCount();
+</script>
+{% endif %}

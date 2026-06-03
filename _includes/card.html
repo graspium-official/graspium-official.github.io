@@ -13,7 +13,7 @@
   {% endif %}
 {% endfor %}
 
-<div class="card" data-field="{{ p.field }}" data-lang="{{ p.lang }}" data-id="{{ p.id }}" data-keywords="{{ kw_list }}">
+<div class="card" data-field="{{ p.field }}" data-lang="{{ p.lang }}" data-id="{{ p.id }}" data-keywords="{{ kw_list }}" data-presenter="{{ p.presenter }}">
   <div class="card-img">
     <img src="{{ thumb }}" alt="" loading="lazy" />
     <span class="venue-badge">{{ p.venue }}</span>
