@@ -467,3 +467,17 @@
   thumbnail: "assets/thumbnails/GWB-006.png"
   slides: "https://drive.google.com/file/d/1x-0IQyoznWVWZur6s2hAg6icwR6Ua99x/view?usp=drive_link"
   notes: "No code available yet"
+
+- id: "ys-005"
+  title: "An Adaptive Compliant Multi-finger Approach-To-Grasp Strategy for  Objects with Position Uncertainties"
+  authors: "Zhaopeng Chen, Thomas Wimb ̈ock, Maximo A. Roa, Benedikt Pleintinger, Miguel Neves  Christian Ott, Christoph Borst, and Neal Y. Lii"
+  venue: "ICRA"
+  date: "2026-06-09"
+  field: "grasping"
+  lang: "kor"
+  keywords:
+    - "Grasping"
+  presenter: "Yesol Kim"
+  status: "pending"
+  paper: "#"
+  thumbnail: "assets/thumbnails/ys-005.png"
