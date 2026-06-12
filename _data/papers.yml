@@ -482,3 +482,18 @@
   paper: "#"
   thumbnail: "assets/thumbnails/ys-005.png"
   slides: "https://drive.google.com/file/d/1JYatahJoB0OcLNq8yToqa7fQQjBfQFwn/view?usp=drive_link"
+
+- id: "ys-006"
+  title: "TacDexGrasp: Compliant and Robust Dexterous Grasping with Tactile Feedback"
+  authors: "Yubin Ke , Jiayi Chen ,Hang Lv et al."
+  venue: "arXiv"
+  date: "2026-06-12"
+  field: "grasping"
+  lang: "kor"
+  keywords:
+    - "Grasp"
+  presenter: "Yesol Kim"
+  status: "pending"
+  paper: "#"
+  thumbnail: "assets/thumbnails/ys-006.png"
+  slides: "https://drive.google.com/file/d/1wwiweABn2Enhj6yztYtDuEE6KTFmYSmB/view?usp=drive_link"
