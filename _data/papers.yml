@@ -513,6 +513,7 @@
   status: "pending"
   paper: "https://arxiv.org/abs/2509.12562"
   thumbnail: "assets/thumbnails/cy-007.png"
+  slides: "https://drive.google.com/file/d/11WhrVPHpv1djqfx-JJvx4Qd8qolN8yvd/view?usp=sharing"
 
 - id: "GWB-007"
   title: "DexGraspNet: A Large-Scale Robotic Dexterous Grasp Dataset for General Objects Based on Simulation"
