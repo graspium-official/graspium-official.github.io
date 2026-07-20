@@ -533,3 +533,18 @@
   thumbnail: "assets/thumbnails/GWB-007.png"
   slides: "https://drive.google.com/file/d/1SA5OdUerC94J0CVIpsNYXcghrw1cOfyh/view?usp=drive_link"
   notes: "Need extra configuration for custom hand."
+
+- id: "cy-008"
+  title: "Contact-Grounded Policy: Dexterous Visuotactile Policy with Generative Contact Grounding"
+  authors: "Zhengtong Xu, Yeping Wang, Ben Abbatematteo et al."
+  venue: "RSS"
+  date: "2026-07-20"
+  field: "dexterous"
+  lang: "eng"
+  keywords:
+    - "Dexterous"
+    - "Manipulation"
+  presenter: "Chanyoung Ahn"
+  status: "pending"
+  paper: "https://arxiv.org/abs/2603.05687"
+  thumbnail: "assets/thumbnails/cy-008.png"
