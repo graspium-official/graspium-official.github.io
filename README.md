@@ -7,3 +7,7 @@
 
 2. Fill out the form.
 <img width="1362" height="667" alt="Screenshot 2026-04-06 at 12 52 47 AM" src="https://github.com/user-attachments/assets/17c236fe-87e5-417a-a795-edbeb2704982" />
+
+
+## How to manage memebers
+Check '/graspium-official.github.io/blob/main/_data/members.yml'!
