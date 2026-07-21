@@ -548,6 +548,7 @@
   status: "pending"
   paper: "https://arxiv.org/abs/2603.05687"
   thumbnail: "assets/thumbnails/cy-008.png"
+  slides: "https://drive.google.com/file/d/1GiaXZCxWChOkCr6RRzWcaUjxUc3h5Dtt/view?usp=sharing"
 
 - id: "ys-007"
   title: "Unified Impedance and Admittance Control"
