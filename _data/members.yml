@@ -1,8 +1,3 @@
-- name: "Chanyoung Ahn"
-  role: "organizer (prev)"
-  affiliation: "KIST PRIME Lab"
-  github: "cold-young"
-  url: "https://cold-young.github.io"
 
 - name: "Jaesung Lee"
   role: "organizer"
@@ -14,22 +9,28 @@
   affiliation: "KIST PRIME Lab"
   github: "1tyhj1"
 
-- name: "Giwon Baek"
-  role: "member"
-  affiliation: "KIST HARI Lab"
-  github: "BbaekGiwon"
-
 - name: "Yesol Kim"
   role: "member"
   affiliation: "KIST PRIME Lab"
   github: "Yesol-sally"
+
+- name: "Sangjun Noh"
+  role: "member"
+  affiliation: "KIST PRIME Lab"
+  github: "dinnno"
 
 - name: "Byeongchan Park"
   role: "member"
   affiliation: "KIST PRIME Lab"
   github: "purplecheesecak2"
 
-- name: "Sangjun Noh"
-  role: "member"
+- name: "Chanyoung Ahn"
+  role: "organizer (prev)"
   affiliation: "KIST PRIME Lab"
-  github: "dinnno"
+  github: "cold-young"
+  url: "https://cold-young.github.io"
+
+- name: "Giwon Baek"
+  role: "member (prev)"
+  affiliation: "KIST HARI Lab"
+  github: "BbaekGiwon"
