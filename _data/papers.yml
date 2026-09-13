@@ -628,3 +628,17 @@
   status: "pending"
   paper: "#"
   thumbnail: "assets/thumbnails/ys-008.png"
+
+- id: "ys-009"
+  title: "Learning Hybrid-Control Policies for High-Precision In-Contact Manipulation Under Uncertainty"
+  authors: "Hunter.L Brown, Geoffrey Hollinger, Stefan Lee"
+  venue: "arXiv"
+  date: "2026-09-13"
+  field: "reinforcement_learning"
+  lang: "kor"
+  keywords:
+    - "Hybrid control policy"
+  presenter: "Yesol Kim"
+  status: "pending"
+  paper: "#"
+  thumbnail: "assets/thumbnails/ys-009.png"
