@@ -565,6 +565,7 @@
   status: "pending"
   paper: "#"
   thumbnail: "assets/thumbnails/ys-007.png"
+  slides: "https://drive.google.com/file/d/1nI37657R7h8BrL4X75GrSZhBj4OYuUc5/view?usp=drive_link"
 
 - id: "js-006"
   title: "DexCap: Scalable and Portable Mocap Data Collection System for Dexterous Manipulation"
