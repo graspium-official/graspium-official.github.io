@@ -614,3 +614,17 @@
   paper: "#"
   thumbnail: "assets/thumbnails/js-008.png"
   slides: "https://drive.google.com/file/d/1D8XCEd47Nxtz1OGxeV6cIA6842YEY_tE/view?usp=drive_link"
+
+- id: "ys-008"
+  title: "Adaptive Compliance Policy: Learning Approximate Compliance for Diffusion-Guided Control"
+  authors: "Yifan Houl, Zeyi Liu, Cheng Chil et al."
+  venue: "ICRA"
+  date: "2026-09-13"
+  field: "manipulation"
+  lang: "kor"
+  keywords:
+    - "Compliance control"
+  presenter: "Yesol Kim"
+  status: "pending"
+  paper: "#"
+  thumbnail: "assets/thumbnails/ys-008.png"
